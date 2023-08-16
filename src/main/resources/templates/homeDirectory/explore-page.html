@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Kindergarten</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Add your custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .jumbotron {
+            background: url('@{/back.jpg}') no-repeat center center;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 150px 0;
+        }
+        .feature-box {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #f39c12;
+        }
+    </style>
+</head>
+<body>
+<div class="jumbotron" style="background-image: url(/back.jpg);">
+    <h1>Welcome to Our Kindergarten</h1>
+    <p>Explore the wonders of early childhood education.</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fas fa-book"></i></div>
+                <h3>Interactive Learning</h3>
+                <p>Engaging activities to foster creativity and curiosity.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fas fa-users"></i></div>
+                <h3>Qualified Teachers</h3>
+                <p>Caring professionals dedicated to your child's growth.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fas fa-play"></i></div>
+                <h3>Play-based Approach</h3>
+                <p>Learning through play for holistic development.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add FontAwesome link for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

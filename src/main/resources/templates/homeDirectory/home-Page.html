@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +47,7 @@
     <div class="container">
         <h1 class="display-4">Welcome to Nanhe Munne Play Center</h1>
         <p class="lead">Experience fun and excitement for all ages</p>
-        <a href="#" class="btn btn-light btn-lg">Explore Now</a>
+        <a th:href="@{/explore/explorePage}" class="btn btn-light btn-lg">Explore Now</a>
     </div>
 </header>
 
