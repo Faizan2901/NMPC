@@ -82,6 +82,9 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>
+			NPMC
+		</finalName>
 	</build>
 
 </project>
