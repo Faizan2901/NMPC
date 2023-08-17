@@ -17,8 +17,10 @@ public class NMPCSecurity {
                         configurer
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/loginPage").permitAll()
+                                .requestMatchers("/explore/**").permitAll()
                                 .requestMatchers("/leaders/**").hasRole("MANAGER")
                                 .requestMatchers("/systems/**").hasRole("ADMIN")
+                                .requestMatchers("/images/**", "/css/**", "/js/**").permitAll() // Allow access to static resources
                                 .anyRequest().authenticated()
 
                 )
@@ -28,8 +30,7 @@ public class NMPCSecurity {
                                 .loginProcessingUrl("/authenticateUser")
                                 .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll
-                );
+                .logout(LogoutConfigurer::permitAll);
 
         return httpSecurity.build();
     }
