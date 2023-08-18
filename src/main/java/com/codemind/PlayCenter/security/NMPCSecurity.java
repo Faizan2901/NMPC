@@ -15,12 +15,9 @@ public class NMPCSecurity {
         httpSecurity.authorizeHttpRequests(configurer->
 
                         configurer
-                                .requestMatchers("/").permitAll()
-                                .requestMatchers("/loginPage").permitAll()
-                                .requestMatchers("/explore/**").permitAll()
+                                .requestMatchers("/","/loginPage","/explore/**","/contact/**","/images/**", "/css/**", "/js/**").permitAll() // Allow access to static resources
                                 .requestMatchers("/leaders/**").hasRole("MANAGER")
                                 .requestMatchers("/systems/**").hasRole("ADMIN")
-                                .requestMatchers("/images/**", "/css/**", "/js/**").permitAll() // Allow access to static resources
                                 .anyRequest().authenticated()
 
                 )
