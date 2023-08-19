@@ -10,4 +10,9 @@ public class LoginController {
     private String getLoginPage(){
         return "/homeDirectory/login/login-page";
     }
+
+    @GetMapping("/dashboard")
+    private String getDashboardPage(){
+        return "/homeDirectory/login/dash-board";
+    }
 }
