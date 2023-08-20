@@ -36,6 +36,12 @@
         .card-text {
             font-size: 1.2rem;
         }
+
+        /* Set a fixed height for the card images */
+        .card-img-top {
+            height: 200px; /* You can adjust this height as needed */
+            object-fit: cover; /* This ensures the image covers the entire space */
+        }
     </style>
 </head>
 <body>
@@ -60,7 +66,7 @@
         <!-- Event Calendar Card -->
         <div class="col-md-4">
             <div class="card">
-                <img src="calendar.jpg" class="card-img-top" alt="Calendar">
+                <img th:src="@{/images/calendar.jpg}" class="card-img-top" alt="Calendar">
                 <div class="card-body">
                     <h5 class="card-title">Event Calendar</h5>
                     <p class="card-text">Check upcoming events and activities.</p>
@@ -72,7 +78,7 @@
         <!-- Announcements Card -->
         <div class="col-md-4">
             <div class="card">
-                <img src="announcement.jpg" class="card-img-top" alt="Announcements">
+                <img th:src="@{/images/announcement.jpg}" class="card-img-top" alt="Announcements">
                 <div class="card-body">
                     <h5 class="card-title">Announcements</h5>
                     <p class="card-text">Read the latest news and announcements.</p>
@@ -87,4 +93,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
+<footer class="bg-dark text-white py-3 text-center">
+    <p>&copy; 2023 NMPC. All rights reserved.</p>
+</footer>
+
 </html>
