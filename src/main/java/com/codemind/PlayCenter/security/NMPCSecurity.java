@@ -36,7 +36,7 @@ public class NMPCSecurity{
 
                         configurer
                                 .requestMatchers("/","/loginPage","/explore/**","/contact/**","/images/**", "/css/**", "/js/**").permitAll() // Allow access to static resources
-                                .requestMatchers("/leaders/**").hasRole("MANAGER")
+                                .requestMatchers("/leaders/**").hasRole("TEACHER")
                                 .requestMatchers("/systems/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
 
