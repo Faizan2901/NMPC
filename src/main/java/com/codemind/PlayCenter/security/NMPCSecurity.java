@@ -42,6 +42,7 @@ public class NMPCSecurity{
                 .formLogin(form->
 
                         form
+                                .loginPage("/loginPage")
                                 .loginProcessingUrl("/authenticateUser")
                                 .successHandler(new CustomAuthenticationSuccessHandler())
                                 .permitAll()
