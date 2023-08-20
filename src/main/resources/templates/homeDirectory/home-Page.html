@@ -7,8 +7,19 @@
     <title>Playcenter - Welcome</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-    /* Additional custom styles can be added here */
-  </style>
+        /* Additional custom styles can be added here */
+
+        /* Set a fixed height for the card images */
+        .card-img-top {
+            height: 200px; /* You can adjust this height as needed */
+            object-fit: cover; /* This ensures the image covers the entire space */
+        }
+
+        /* Add a hover effect to show the image when hovering over the card */
+        .card:hover .card-img-top {
+            height: auto; /* Set to auto to expand to the image's natural height */
+        }
+    </style>
 </head>
 <body>
 
@@ -58,9 +69,9 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="game1.jpg" class="card-img-top" alt="Game 1">
+                    <img th:src="@{/images/etiquettes.jpeg}" class="card-img-top" alt="Game 1">
                     <div class="card-body">
-                        <h5 class="card-title">Adventure Quest</h5>
+                        <h5 class="card-title">Teach Etiquette of Life</h5>
                         <p class="card-text">Embark on an epic adventure and uncover hidden treasures.</p>
                     </div>
                 </div>
