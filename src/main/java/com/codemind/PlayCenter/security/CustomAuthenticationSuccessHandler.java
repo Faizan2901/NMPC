@@ -17,7 +17,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         // Customize the redirection URL based on your requirements
-        response.sendRedirect("/dashboard"); //// Redirect to the "/dashboard" page, for example
+        response.sendRedirect("/dashboard/dash-board"); //// Redirect to the "/dashboard" page, for example
 
     }
 }
