@@ -18,11 +18,6 @@ public class LoginController {
         return "/homeDirectory/login/login-page";
     }
 
-    @GetMapping("/dashboard")
-    private String getDashboardPage(){
-        return "/homeDirectory/login/dash-board";
-    }
-
     @PostMapping("/logout")
     public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
         // .. perform logout
