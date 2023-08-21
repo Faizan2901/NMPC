@@ -47,7 +47,8 @@ public class NMPCSecurity{
                                 .successHandler(new CustomAuthenticationSuccessHandler())
                                 .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll);
+                .logout(LogoutConfigurer::permitAll)
+                .logout((logout)->logout.logoutUrl("/nmpc-home"));
 
         return httpSecurity.build();
     }
