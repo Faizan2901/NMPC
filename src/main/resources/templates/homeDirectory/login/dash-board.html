@@ -115,6 +115,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4" sec:authorize="hasRole('TEACHER')">
+            <div class="card">
+                <img th:src="@{/images/attendance.jpg}" class="card-img-top" alt="Announcements">
+                <div class="card-body">
+                    <h5 class="card-title">Attendance Section</h5>
+                    <p class="card-text">Fill Attendance of Student</p>
+                    <a th:href="@{/dashboard/fill-attendance}" class="btn btn-primary">Go to Attendance Section</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
