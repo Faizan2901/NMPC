@@ -1,12 +1,16 @@
 package com.codemind.PlayCenter.controller;
 
 import com.codemind.PlayCenter.dao.StudentDAO;
+import com.codemind.PlayCenter.entity.Role;
 import com.codemind.PlayCenter.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -41,7 +45,25 @@ public class DashBoardController {
     }
 
     @GetMapping("/fill-attendance")
-    private String getAllStudentForAttendance(){
+    private String getAllStudentForAttendance(Model model){
+
+        List<Student> studentList=studentDAO.findAll();
+
+        List<Student> students=new ArrayList<>();
+
+        for(Student tempStudent:studentList)
+        {
+            List<Role> stuRole=tempStudent.getRoles();
+            for(Role role:stuRole){
+                if(role.getName().equals("ROLE_STUDENT")){
+                    students.add(tempStudent);
+                    break;
+                }
+            }
+        }
+
+        model.addAttribute("allStudents",students);
+
         return "/homeDirectory/attendance-page";
     }
 
