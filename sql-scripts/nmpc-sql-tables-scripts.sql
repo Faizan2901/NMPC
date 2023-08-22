@@ -15,7 +15,7 @@ CREATE TABLE `student` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` char(80) NOT NULL,
-  `enabled` tinyint NOT NULL,  
+  `enabled` tinyint NOT NULL,
   `first_name` varchar(64) NOT NULL,
   `last_name` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`username`,`password`,`enabled`, `first_name`, `last_name`, `email`)
-VALUES 
+VALUES
 ('hassan','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,'Hassan', 'Mutarwala', 'hassan@codemind.com'),
 ('abdul','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,'Abdul Aziz', 'Jangiwala', 'abdulaziz@codemind.com'),
 ('faizan','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,'Mohammad Faizan', 'Sopariwala', 'faizan@codemind.com');
@@ -58,7 +58,7 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (name)
-VALUES 
+VALUES
 ('ROLE_STUDENT'),('ROLE_TEACHER'),('ROLE_ADMIN');
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -72,17 +72,17 @@ DROP TABLE IF EXISTS `students_roles`;
 CREATE TABLE `students_roles` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  
+
   PRIMARY KEY (`user_id`,`role_id`),
-  
+
   KEY `FK_ROLE_idx` (`role_id`),
-  
-  CONSTRAINT `FK_USER_05` FOREIGN KEY (`user_id`) 
-  REFERENCES `user` (`id`) 
+
+  CONSTRAINT `FK_USER_05` FOREIGN KEY (`user_id`)
+  REFERENCES `student` (`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION,
-  
-  CONSTRAINT `FK_ROLE` FOREIGN KEY (`role_id`) 
-  REFERENCES `role` (`id`) 
+
+  CONSTRAINT `FK_ROLE` FOREIGN KEY (`role_id`)
+  REFERENCES `role` (`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -93,10 +93,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 --
 
 INSERT INTO `students_roles` (user_id,role_id)
-VALUES 
+VALUES
 (1, 1),
-(2, 1),
 (2, 2),
-(3, 1),
-(3, 2),
 (3, 3)
