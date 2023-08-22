@@ -40,4 +40,9 @@ public class DashBoardController {
         return "/homeDirectory/student-dashboard";
     }
 
+    @GetMapping("/fill-attendance")
+    private String getAllStudentForAttendance(){
+        return "/homeDirectory/attendance-page";
+    }
+
 }
