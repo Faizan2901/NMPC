@@ -19,6 +19,25 @@
         .card:hover .card-img-top {
             height: auto; /* Set to auto to expand to the image's natural height */
         }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        section {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -36,13 +55,13 @@
                     <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="#about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
+                    <a class="nav-link" href="#service">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#contact">Contact</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/loginPage}">Login</a>
@@ -106,7 +125,36 @@
         </div>
     </div>
 </section>
+<section>
+    <h2 id="about">About Our Nanhe Munne Play Center</h2>
+    <p>We provide a nurturing and educational environment for your child's early years. Our experienced staff is dedicated to fostering creativity, curiosity, and growth in a safe and loving setting.</p>
+    <h4>What is Nanhe Munne Play Center?</h4>
+    <p>A "Nanhe Munne Play Center" often abbreviated as "kinder" or "KG," is an educational institution or a grade level that focuses on the early childhood education and development of young children, typically ranging from ages 3 to 6 years old, although the specific age range can vary from one country or educational system to another. Kindergarten plays a crucial role in a child's early years by providing a structured environment that fosters social, emotional, intellectual, and physical development.</p>
+    <p>We have this teaching place since 2001</p>
+</section>
 
+<section>
+    <h2 id="service">Our Services</h2>
+    <ul>
+        <li><strong>Early Learning Programs:</strong> We offer age-appropriate learning activities and play-based curriculum.</li>
+        <li><strong>Qualified Staff:</strong> Our teachers are certified and experienced in early childhood education.</li>
+        <li><strong>Safe Environment:</strong> Your child's safety is our top priority, with secure facilities and supervision.</li>
+        <li><strong>Healthy Meals:</strong> Nutritious meals and snacks are provided to support your child's development.</li>
+        <li><strong>Parent Involvement:</strong> We encourage parental involvement and open communication.</li>
+        <li><strong>Prize Ceremony:</strong> We encourage children to give prize for open communication.</li>
+        <li><strong>Annual Farewall:</strong> We celebrate annual function every end of teachinh year and give grade to children for further addmission.</li>
+    </ul>
+</section>
+
+<section>
+    <h2 id="contact">Contact Us</h2>
+    <p>If you have any questions or would like to enroll your child, please feel free to contact us:</p>
+    <address>
+        Email: <a href="mailto:info@kindergartenservices.com">info@kindergartenservices.com</a><br>
+        Phone: <a href="tel:+123456789">123-456-789</a><br>
+        Address: 123 Sunshine Street, Happyville, USA
+    </address>
+</section>
 <!-- Footer -->
 <footer class="bg-dark text-white py-3 text-center">
     <p>&copy; 2023 NMPC. All rights reserved.</p>
