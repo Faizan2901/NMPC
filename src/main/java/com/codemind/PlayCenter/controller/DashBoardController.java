@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -64,8 +66,9 @@ public class DashBoardController {
             }
         }
 
+        LocalDate date = LocalDate.now();
         model.addAttribute("allStudents",students);
-
+        model.addAttribute("todayDate",date);
         return "/homeDirectory/attendance-page";
     }
 
@@ -74,7 +77,12 @@ public class DashBoardController {
         for(String seleString:selectedItems){
             System.out.println(seleString);
         }
-        return "";
+
+
+
+        return "redirect:/dashboard/dash-board";
     }
+
+
 
 }
