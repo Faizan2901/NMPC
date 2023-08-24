@@ -1,8 +1,10 @@
 package com.codemind.PlayCenter.controller;
 
+import com.codemind.PlayCenter.dao.StudentAttendanceDAO;
 import com.codemind.PlayCenter.dao.StudentDAO;
 import com.codemind.PlayCenter.entity.Role;
 import com.codemind.PlayCenter.entity.Student;
+import com.codemind.PlayCenter.entity.StudentAttendance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,9 @@ public class DashBoardController {
 
     @Autowired
     StudentDAO studentDAO;
+
+    @Autowired
+    StudentAttendanceDAO studentAttendanceDAO;
 
     @GetMapping("/dash-board")
     private String getDashboardPage(Model model){
@@ -74,8 +79,20 @@ public class DashBoardController {
 
     @PostMapping("/fill-info")
     private String showAttendedStudent(@RequestParam("selectedItems") List<String> selectedItems){
-        for(String seleString:selectedItems){
-            System.out.println(seleString);
+
+        LocalDate date = LocalDate.now();
+        for(String selectString:selectedItems)
+        {
+            Student student=studentDAO.findByUserName(selectString);
+//            StudentAttendance tempAttendanceStudent=studentAttendanceDAO.findByStudentUsernameAndDate(student.getUserName(),date);
+//            if(tempAttendanceStudent != null){
+//
+//            }
+            StudentAttendance studentAttendance=new StudentAttendance();
+            studentAttendance.setStudentId(student.getId());
+            studentAttendance.setStudentUsername(student.getUserName());
+            studentAttendance.setDate(date);
+            studentAttendanceDAO.save(studentAttendance);
         }
 
 
