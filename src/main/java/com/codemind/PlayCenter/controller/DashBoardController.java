@@ -60,12 +60,19 @@ public class DashBoardController {
 
         List<Student> students=new ArrayList<>();
 
+        List<Student> attendedStudents=new ArrayList<>();
+
         for(Student tempStudent:studentList)
         {
             List<Role> stuRole=tempStudent.getRoles();
             for(Role role:stuRole){
                 if(role.getName().equals("ROLE_STUDENT")){
-                    students.add(tempStudent);
+                    StudentAttendance studentAttendance=studentAttendanceDAO.findByStudentUsernameAndDate(tempStudent.getUserName(),LocalDate.now());
+                    if(studentAttendance!=null){
+                        attendedStudents.add(tempStudent);
+                    }else{
+                        students.add(tempStudent);
+                    }
                     break;
                 }
             }
