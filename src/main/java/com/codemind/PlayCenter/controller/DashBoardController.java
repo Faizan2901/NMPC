@@ -62,6 +62,8 @@ public class DashBoardController {
 
         List<Student> attendedStudents=new ArrayList<>();
 
+        boolean isPresentAttended=false;
+        boolean isNotDoneAttendance=false;
         for(Student tempStudent:studentList)
         {
             List<Role> stuRole=tempStudent.getRoles();
@@ -69,8 +71,10 @@ public class DashBoardController {
                 if(role.getName().equals("ROLE_STUDENT")){
                     StudentAttendance studentAttendance=studentAttendanceDAO.findByStudentUsernameAndDate(tempStudent.getUserName(),LocalDate.now());
                     if(studentAttendance!=null){
+                        isPresentAttended=true;
                         attendedStudents.add(tempStudent);
                     }else{
+                        isNotDoneAttendance=true;
                         students.add(tempStudent);
                     }
                     break;
@@ -79,6 +83,9 @@ public class DashBoardController {
         }
 
         LocalDate date = LocalDate.now();
+        model.addAttribute("isDoneStudent",isPresentAttended);
+        model.addAttribute("attendanceDoneStudent",attendedStudents);
+        model.addAttribute("isNotDoneAttendance",isNotDoneAttendance);
         model.addAttribute("allStudents",students);
         model.addAttribute("todayDate",date);
         return "/homeDirectory/attendance-page";
