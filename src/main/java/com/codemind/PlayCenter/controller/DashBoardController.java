@@ -81,13 +81,10 @@ public class DashBoardController {
     private String showAttendedStudent(@RequestParam("selectedItems") List<String> selectedItems){
 
         LocalDate date = LocalDate.now();
+
         for(String selectString:selectedItems)
         {
             Student student=studentDAO.findByUserName(selectString);
-//            StudentAttendance tempAttendanceStudent=studentAttendanceDAO.findByStudentUsernameAndDate(student.getUserName(),date);
-//            if(tempAttendanceStudent != null){
-//
-//            }
             StudentAttendance studentAttendance=new StudentAttendance();
             studentAttendance.setStudentId(student.getId());
             studentAttendance.setStudentUsername(student.getUserName());

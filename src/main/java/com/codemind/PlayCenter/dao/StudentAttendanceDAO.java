@@ -10,7 +10,6 @@ import java.util.Locale;
 
 public interface StudentAttendanceDAO extends JpaRepository<StudentAttendance,Integer> {
 
-
     List<StudentAttendance> findByStudentUsername(String userName);
 
     StudentAttendance findByStudentUsernameAndDate(String userName,LocalDate date);
