@@ -12,6 +12,9 @@ public interface StudentAttendanceDAO extends JpaRepository<StudentAttendance,In
 
     List<StudentAttendance> findByStudentUsername(String userName);
 
+    List<StudentAttendance> findByDate(LocalDate date);
+
     StudentAttendance findByStudentUsernameAndDate(String userName,LocalDate date);
+
 
 }
