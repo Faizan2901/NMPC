@@ -8,10 +8,7 @@ import com.codemind.PlayCenter.entity.StudentAttendance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -96,7 +93,7 @@ public class DashBoardController {
 
         List<StudentAttendance> tempStudentAttendance=studentAttendanceDAO.findByDate(LocalDate.now());
 
-        if(selectedItems==null && tempStudentAttendance==null){
+        if(selectedItems==null && tempStudentAttendance.isEmpty()){
             return "redirect:/dashboard/fill-attendance";
         }
 
@@ -135,8 +132,23 @@ public class DashBoardController {
         }
 
         model.addAttribute("allStudents",allStudents);
+        model.addAttribute("todayDate",LocalDate.now());
 
         return "/homeDirectory/attended-student-list";
+    }
+
+    @GetMapping("/deleteUser")
+    String deleteStudentFromAttendanceList(@RequestParam("studentId") String id){
+
+        Optional<Student> tempStudent=studentDAO.findById(Integer.parseInt(id));
+        Student student=tempStudent.get();
+
+        StudentAttendance studentAttendance=studentAttendanceDAO.findByStudentUsernameAndDate(student.getUserName(),LocalDate.now());
+
+        studentAttendanceDAO.delete(studentAttendance);
+
+        return "redirect:/dashboard/attended-student";
+
     }
 
 
