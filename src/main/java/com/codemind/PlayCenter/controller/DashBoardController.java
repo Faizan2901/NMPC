@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -92,25 +92,52 @@ public class DashBoardController {
     }
 
     @PostMapping("/fill-info")
-    private String showAttendedStudent(@RequestParam("selectedItems") List<String> selectedItems){
+    private String showAttendedStudent(@RequestParam(name = "selectedItems", required = false) List<String> selectedItems,Model model){
 
-        LocalDate date = LocalDate.now();
+        List<StudentAttendance> tempStudentAttendance=studentAttendanceDAO.findByDate(LocalDate.now());
 
-        for(String selectString:selectedItems)
-        {
-            Student student=studentDAO.findByUserName(selectString);
-            StudentAttendance studentAttendance=new StudentAttendance();
-            studentAttendance.setStudentId(student.getId());
-            studentAttendance.setStudentUsername(student.getUserName());
-            studentAttendance.setDate(date);
-            studentAttendanceDAO.save(studentAttendance);
+        if(selectedItems==null && tempStudentAttendance==null){
+            return "redirect:/dashboard/fill-attendance";
         }
 
+        if(selectedItems!=null){
+            for(String selectString:selectedItems)
+            {
+                Student student=studentDAO.findByUserName(selectString);
+                StudentAttendance studentAttendance=new StudentAttendance();
+                studentAttendance.setStudentId(student.getId());
+                studentAttendance.setStudentUsername(student.getUserName());
+                studentAttendance.setDate(LocalDate.now());
+                studentAttendanceDAO.save(studentAttendance);
+            }
+            return "redirect:/dashboard/dash-board";
 
-
-        return "redirect:/dashboard/dash-board";
+        }
+        else
+        {
+            model.addAttribute("isNull",true);
+            return "redirect:/dashboard/attended-student";
+        }
     }
 
+
+    @GetMapping("/attended-student")
+    private String showAttendedStudentList(Model model){
+
+        List<StudentAttendance> studentAttendance=studentAttendanceDAO.findByDate(LocalDate.now());
+
+        List<Student> allStudents=new ArrayList<>();
+
+        for(StudentAttendance attendance:studentAttendance){
+            Optional<Student> tempStudent=studentDAO.findById(attendance.getStudentId());
+            Student student = tempStudent.get();
+            allStudents.add(student);
+        }
+
+        model.addAttribute("allStudents",allStudents);
+
+        return "/homeDirectory/attended-student-list";
+    }
 
 
 }
