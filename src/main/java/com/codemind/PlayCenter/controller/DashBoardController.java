@@ -34,6 +34,14 @@ public class DashBoardController {
         String authenticateUserName=authController.getAuthenticateUserName();
         Student student=studentDAO.findByUserName(authenticateUserName);
 
+
+        List<StudentAttendance> studentAttendance=studentAttendanceDAO.findByDate(LocalDate.now());
+
+        if(!studentAttendance.isEmpty()){
+            model.addAttribute("isHave",true);
+        }
+
+
         model.addAttribute("userdetails",student.getFirstName()+" "+student.getLastName());
 
 
@@ -52,7 +60,6 @@ public class DashBoardController {
 
     @GetMapping("/fill-attendance")
     private String getAllStudentForAttendance(Model model){
-
         List<Student> studentList=studentDAO.findAll();
 
         List<Student> students=new ArrayList<>();
@@ -107,7 +114,7 @@ public class DashBoardController {
                 studentAttendance.setDate(LocalDate.now());
                 studentAttendanceDAO.save(studentAttendance);
             }
-            return "redirect:/dashboard/dash-board";
+            return "redirect:/dashboard/attended-student";
 
         }
         else
@@ -146,6 +153,10 @@ public class DashBoardController {
         StudentAttendance studentAttendance=studentAttendanceDAO.findByStudentUsernameAndDate(student.getUserName(),LocalDate.now());
 
         studentAttendanceDAO.delete(studentAttendance);
+
+        if(studentAttendanceDAO.findByDate(LocalDate.now()).isEmpty()){
+            return "redirect:/dashboard/fill-attendance";
+        }
 
         return "redirect:/dashboard/attended-student";
 
