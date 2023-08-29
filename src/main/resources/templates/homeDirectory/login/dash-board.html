@@ -117,11 +117,21 @@
         </div>
         <div class="col-md-4" sec:authorize="hasRole('TEACHER')">
             <div class="card">
-                <img th:src="@{/images/attendance.jpg}" class="card-img-top" alt="Announcements">
+                <img th:src="@{/images/atten.jpg}" class="card-img-top" alt="Announcements">
                 <div class="card-body">
                     <h5 class="card-title">Attendance Section</h5>
                     <p class="card-text">Fill Attendance of Student</p>
                     <a th:href="@{/dashboard/fill-attendance}" class="btn btn-primary">Go to Attendance Section</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" th:if="${isHave}" sec:authorize="hasRole('TEACHER')">
+            <div class="card">
+                <img th:src="@{/images/attendance.jpg}" class="card-img-top" alt="Announcements">
+                <div class="card-body">
+                    <h5 class="card-title">Show Attendance Sheet</h5>
+                    <p class="card-text">List of Attended Student</p>
+                    <a th:href="@{/dashboard/attended-student}" class="btn btn-primary">Review Attendance</a>
                 </div>
             </div>
         </div>
