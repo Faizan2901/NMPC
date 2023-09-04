@@ -54,3 +54,5 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2023-08-25 15:43:05
+
+ALTER TABLE nmpc.student ADD COLUMN admission_date DATETIME;
