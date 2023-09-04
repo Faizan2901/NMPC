@@ -48,16 +48,6 @@ public class DashBoardController {
         return "/homeDirectory/login/dash-board";
     }
 
-    @GetMapping("/student-info")
-    private String getStudentInfo(Model model){
-        String authenticateUserName=authController.getAuthenticateUserName();
-        Student student=studentDAO.findByUserName(authenticateUserName);
-
-        model.addAttribute("username",student.getFirstName());
-
-        return "/homeDirectory/student-dashboard";
-    }
-
     @GetMapping("/fill-attendance")
     private String getAllStudentForAttendance(Model model){
         List<Student> studentList=studentDAO.findAll();
