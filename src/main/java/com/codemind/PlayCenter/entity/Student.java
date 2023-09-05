@@ -3,6 +3,7 @@ package com.codemind.PlayCenter.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class Student {
     private String lastName;
     @Column(name = "email")
     private String email;
+    @Column(name = "admission_date")
+    private LocalDate admissionDate;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "students_roles",
