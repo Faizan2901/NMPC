@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,51 +56,32 @@
 
     <!-- Filters -->
     <div class="row justify-content-between mt-3">
-<!--        <div class="col-md-4">-->
-<!--            <div class="input-group">-->
-<!--                <input type="text" class="form-control" placeholder="Search by student name">-->
-<!--                <button class="btn btn-primary" type="button">Search</button>-->
-<!--            </div>-->
-<!--        </div>-->
-        <div class="col-md-4">
-            <select class="form-select" aria-label="Select Class">
-                <option selected>Select Class</option>
-                <option value="class1">Class 1</option>
-                <option value="class2">Class 2</option>
-                <option value="class3">Class 3</option>
-            </select>
-        </div>
+        <table class="table table-responsive-xl">
+            <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Month</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="student : ${attendanceMonth}">
+                <tr class="alert" role="alert">
+                    <td>
+                        <label class="checkbox-wrap checkbox-primary">
+                            <input type="checkbox" name="selectedItems" th:value="${student}">
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                    <td class="d-flex align-items-center">
+                        <div class="pl-3 email">
+                            <span th:text="${student}"></span>
+                        </div>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
     </div>
-
-    <!-- Attendance Table -->
-    <table class="table table-striped mt-4">
-        <thead>
-        <tr>
-            <th>Student ID</th>
-            <th>Student Name</th>
-            <th>Class</th>
-            <th>Date</th>
-            <th>Attendance Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>001</td>
-            <td>John Doe</td>
-            <td>Class 1</td>
-            <td>2023-09-01</td>
-            <td>Present</td>
-        </tr>
-        <tr>
-            <td>002</td>
-            <td>Jane Smith</td>
-            <td>Class 2</td>
-            <td>2023-09-01</td>
-            <td>Absent</td>
-        </tr>
-        <!-- Add more rows as needed -->
-        </tbody>
-    </table>
 </div>
 
 <!-- Add Bootstrap JS and Popper.js (if needed) -->
