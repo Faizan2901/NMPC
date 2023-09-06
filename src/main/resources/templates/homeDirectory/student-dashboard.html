@@ -4,60 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance Dashboard</title>
-    <!-- Add Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Custom CSS for enhanced design */
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #007bff;
-        }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #dee2e6;
-        }
-        th {
-            background-color: #007bff;
-            color: #fff;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-        select.form-select {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-    </style>
+    <title th:text="${username} +' - Attendance Dashboard'">Attendance Dashboard</title>
+    <!-- Include Bootstrap CSS from a CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="text-center">Student Attendance Dashboard</h1>
-
-    <!-- Filters -->
-    <div class="row justify-content-between mt-3">
-        <table class="table table-responsive-xl">
-            <thead>
+<div class="container">
+    <h3>Attendance Statistics</h3>
+    <form action="#" th:action="@{/student/show-statistics}" method="post">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
             <tr>
                 <th>&nbsp;</th>
                 <th>Month</th>
@@ -65,26 +21,45 @@
             </thead>
             <tbody>
             <th:block th:each="student : ${attendanceMonth}">
-                <tr class="alert" role="alert">
-                    <td>
-                        <label class="checkbox-wrap checkbox-primary">
-                            <input type="checkbox" name="selectedItems" th:value="${student}">
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                    <td class="d-flex align-items-center">
-                        <div class="pl-3 email">
-                            <span th:text="${student}"></span>
-                        </div>
-                    </td>
+                <tr>
+                    <td><input type="checkbox" name="selectedItems" th:value="${student}"></td>
+                    <td><span th:text="${student}"></span></td>
                 </tr>
             </th:block>
             </tbody>
         </table>
+        <div class="mb-2">
+            <input type="submit" class="btn-outline-dark btn-sm " value="Submit">
+        </div>
+    </form>
+    <div class="mb-2">
+        <button class="btn btn-outline-primary btn-sm" id="select-all">Select All</button>
+        <button class="btn btn-outline-danger btn-sm" id="clear-all">Clear</button>
     </div>
 </div>
+<div th:if="${isNull}">
+    <h3>Please select at least one month!!</h3>
+</div>
+<th:block if="${ifAny}" th:each="month : ${selectedMonths}">
+    <h5 th:text="${month}"></h5>
+</th:block>
+<!-- Include Bootstrap JS and Popper.js from a CDN -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<!-- Add Bootstrap JS and Popper.js (if needed) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Select All button click event
+        $('#select-all').click(function() {
+            $('input[name="selectedItems"]').prop('checked', true);
+        });
+
+        // Clear All button click event
+        $('#clear-all').click(function() {
+            $('input[name="selectedItems"]').prop('checked', false);
+        });
+    });
+</script>
 </body>
 </html>
