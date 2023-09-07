@@ -27,22 +27,9 @@ public class StudentController {
     StudentDAO studentDAO;
 
     @GetMapping("/student-info")
-    private String getStudentInfo(HttpSession httpSession,Model model){
+    private String getStudentInfo(Model model){
         String authenticateUserName=authController.getAuthenticateUserName();
         Student student=studentDAO.findByUserName(authenticateUserName);
-
-        boolean isNull=false;
-        if(httpSession.getAttribute("isNull")!=null){
-            isNull=(boolean)httpSession.getAttribute("isNull");
-        }
-
-        boolean ifAny=false;
-        List<String> selectedMonths=new ArrayList<>();
-        if(httpSession.getAttribute("selectedMonth")!=null && httpSession.getAttribute("ifAny")!=null){
-            ifAny=(boolean)httpSession.getAttribute("ifAny");
-            List<String> temp=(List<String>) httpSession.getAttribute("selectedMonth");
-            selectedMonths.addAll(temp);
-        }
 
         LocalDate admissionDate=student.getAdmissionDate();
         LocalDate date1 =LocalDate.of(2011,12,12);
@@ -55,27 +42,22 @@ public class StudentController {
             admissionDate = admissionDate.plus(Period.ofMonths(1));
         }
 
-        model.addAttribute("isNull",isNull);
-        model.addAttribute("ifAny",ifAny);
-        model.addAttribute("selectedMonth",selectedMonths);
         model.addAttribute("username",student.getFirstName());
         model.addAttribute("attendanceMonth",attendanceMonth);
         return "/homeDirectory/student-dashboard";
     }
 
     @PostMapping("/show-statistics")
-    private String showStatistics(@RequestParam(name= "selectedItems", required = false) List<String> selectedMonth, Model model, HttpSession httpSession){
+    private String showStatistics(@RequestParam(name= "selectedItems", required = false) List<String> selectedMonth, Model model){
 
         if(selectedMonth==null){
-            httpSession.setAttribute("isNull",true);
             return "redirect:/student/student-info";
         }
 
         for(String month:selectedMonth){
             System.out.println(month);
         }
-        httpSession.setAttribute("ifAny",true);
-        httpSession.setAttribute("selectedMonth",selectedMonth);
+        model.addAttribute("selectedMonth",selectedMonth);
         return "redirect:/student/student-info";
     }
 }
