@@ -40,7 +40,7 @@
 <div th:if="${isNull}">
     <h3>Please select at least one month!!</h3>
 </div>
-<th:block if="${ifAny}" th:each="month : ${selectedMonths}">
+<th:block th:each="month : ${selectedMonth}">
     <h5 th:text="${month}"></h5>
 </th:block>
 <!-- Include Bootstrap JS and Popper.js from a CDN -->
