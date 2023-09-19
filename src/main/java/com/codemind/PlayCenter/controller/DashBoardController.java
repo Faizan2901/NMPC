@@ -62,7 +62,7 @@ public class DashBoardController {
         {
             List<Role> stuRole=tempStudent.getRoles();
             for(Role role:stuRole){
-                if(role.getName().equals("ROLE_STUDENT")){
+                    if(role.getName().equals("ROLE_STUDENT")){
                     StudentAttendance studentAttendance=studentAttendanceDAO.findByStudentUsernameAndDate(tempStudent.getUserName(),LocalDate.now());
                     if(studentAttendance!=null){
                         isPresentAttended=true;
