@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -96,7 +97,11 @@ public class StudentController {
 
         for(String month:months){
             System.out.println(monthMap.get(month.substring(0,month.indexOf("-"))));
-            System.out.println(studentAttendanceDAO.findAttendanceByStudentNameAndMonth(authController.getAuthenticateUserName(), monthMap.get(month.substring(0,month.indexOf("-")))));
+            List<Date> dates=studentAttendanceDAO.findAttendanceByStudentNameAndMonth(authController.getAuthenticateUserName(), monthMap.get(month.substring(0,month.indexOf("-"))));
+            for(Date date:dates){
+                System.out.println(date.toString());
+            }
+            System.out.println();
         }
 
         return "";

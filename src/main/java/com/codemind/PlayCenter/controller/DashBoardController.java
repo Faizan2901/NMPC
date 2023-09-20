@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +102,7 @@ public class DashBoardController {
                 StudentAttendance studentAttendance=new StudentAttendance();
                 studentAttendance.setStudentId(student.getId());
                 studentAttendance.setStudentUsername(student.getUserName());
-                studentAttendance.setDate(LocalDate.now());
+                studentAttendance.setDate(Date.valueOf(LocalDate.now()));
                 studentAttendanceDAO.save(studentAttendance);
             }
             return "redirect:/dashboard/attended-student";
