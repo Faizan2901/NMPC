@@ -3,6 +3,7 @@ package com.codemind.PlayCenter.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Data
@@ -22,6 +23,6 @@ public class StudentAttendance {
     private String studentUsername;
 
     @Column(name = "date")
-    private LocalDate date;
+    private Date date;
 
 }
