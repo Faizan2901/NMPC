@@ -21,4 +21,7 @@ public interface StudentAttendanceDAO extends JpaRepository<StudentAttendance,In
     @Query(value = "SELECT s.date FROM StudentAttendance s WHERE s.studentUsername = :userName AND s.date LIKE %:dateMonth%")
     List<Date> findAttendanceByStudentNameAndMonth(@Param("userName") String userName, @Param("dateMonth") String dateMonth);
 
+    @Query(value = "SELECT COUNT(*) FROM StudentAttendance s WHERE s.studentUsername = :userName AND s.date LIKE %:dateMonth%")
+    int findAttendanceDaysByStudentNameAndMonth(@Param("userName") String userName, @Param("dateMonth") String dateMonth);
+
 }
