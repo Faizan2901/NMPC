@@ -92,6 +92,8 @@ public class StudentController {
 
         List<String> months = new ArrayList<>();
 
+        Student student=studentDAO.findByUserName(authController.getAuthenticateUserName());
+
         Map<String, List<Date>> dateMonthMap = new HashMap<>();
 
         Map<String, Integer> dateMonthCountMap = new HashMap<>();
@@ -114,6 +116,7 @@ public class StudentController {
         }
         model.addAttribute("dateMonthMap", dateMonthMap);
         model.addAttribute("dateMonthCountMap", dateMonthCountMap);
+        model.addAttribute("name",student.getFirstName()+" "+student.getLastName());
         return "/homeDirectory/show-attendance-statistics";
     }
 }

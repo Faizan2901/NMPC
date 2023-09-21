@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beautiful Table</title>
+  <title th:text="${name}+ 'Attendance - Statistics'"></title>
   <!-- Include Bootstrap CSS (either hosted or local) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -42,7 +42,8 @@
 </head>
 <body>
 <div class="container">
-  <h1 class="mt-4">Beautiful Table</h1>
+  <h2 class="mt-4 text-center">Welcome to Attendance - Statistics of Nahne Munhe Play Center </h2>
+  <h4 class="mt-4 text-center" th:text="${name}+' - your attendance information is mentioned below'"></h4>
   <table class="table table-bordered custom-table">
     <thead>
     <tr>
