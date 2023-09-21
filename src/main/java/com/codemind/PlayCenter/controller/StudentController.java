@@ -94,28 +94,30 @@ public class StudentController {
 
         Student student=studentDAO.findByUserName(authController.getAuthenticateUserName());
 
-        Map<String, List<Date>> dateMonthMap = new HashMap<>();
+        Map<String, Map<List<Date>,Integer>> dateMonthMap = new HashMap<>();
 
-        Map<String, Integer> dateMonthCountMap = new HashMap<>();
+//        Map<String, Integer> dateMonthCountMap = new HashMap<>();
         months = (List<String>) httpSession.getAttribute("selectedMonth");
 
         for (String month : months) {
             List<Date> dates = studentAttendanceDAO.findAttendanceByStudentNameAndMonth(authController.getAuthenticateUserName(), monthMap.get(month.substring(0, month.indexOf("-"))));
             int dayCount = studentAttendanceDAO.findAttendanceDaysByStudentNameAndMonth(authController.getAuthenticateUserName(), monthMap.get(month.substring(0, month.indexOf("-"))));
             if (dayCount > 0) {
-                dateMonthCountMap.put(month, dayCount);
-                dateMonthMap.put(month, dates);
+                HashMap<List<Date>,Integer> dateCountMap=new HashMap<>();
+                dateCountMap.put(dates,dayCount);
+//                dateMonthCountMap.put(month, dayCount);
+                dateMonthMap.put(month, dateCountMap);
             }
         }
 
-        for (Map.Entry<String, List<Date>> entry : dateMonthMap.entrySet()) {
-            System.out.print("Key = " + entry.getKey() + "->");
-            for (Date date : entry.getValue()) {
-                System.out.print(date.toString() + ", ");
-            }
-        }
+//        for (Map.Entry<String, List<Date>> entry : dateMonthMap.entrySet()) {
+//            System.out.print("Key = " + entry.getKey() + "->");
+//            for (Date date : entry.getValue()) {
+//                System.out.print(date.toString() + ", ");
+//            }
+//        }
+//        model.addAttribute("dateMonthMap", dateMonthMap);
         model.addAttribute("dateMonthMap", dateMonthMap);
-        model.addAttribute("dateMonthCountMap", dateMonthCountMap);
         model.addAttribute("name",student.getFirstName()+" "+student.getLastName());
         return "/homeDirectory/show-attendance-statistics";
     }

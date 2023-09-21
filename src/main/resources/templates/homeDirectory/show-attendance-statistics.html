@@ -2,74 +2,72 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="${name}+ 'Attendance - Statistics'"></title>
-  <!-- Include Bootstrap CSS (either hosted or local) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    /* Custom CSS for the table */
-    .custom-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${name}+ 'Attendance - Statistics'"></title>
+    <!-- Include Bootstrap CSS (either hosted or local) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for the table */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-    .custom-table th,
-    .custom-table td {
-        padding: 12px;
-        text-align: center;
-        border: 1px solid #dddddd;
-    }
+        .custom-table th,
+        .custom-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #dddddd;
+        }
 
-    .custom-table thead {
-        background-color: #343a40;
-        color: #fff;
-    }
+        .custom-table thead {
+            background-color: #343a40;
+            color: #fff;
+        }
 
-    .custom-table th {
-        font-weight: bold;
-    }
+        .custom-table th {
+            font-weight: bold;
+        }
 
-    .custom-table tbody tr:nth-child(even) {
-        background-color: #f8f9fa;
-    }
+        .custom-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
 
-    .custom-table tbody tr:hover {
-        background-color: #d1d1d1;
-    }
-  </style>
+        .custom-table tbody tr:hover {
+            background-color: #d1d1d1;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-  <h2 class="mt-4 text-center">Welcome to Attendance - Statistics of Nahne Munhe Play Center </h2>
-  <h4 class="mt-4 text-center" th:text="${name}+' - your attendance information is mentioned below'"></h4>
-  <table class="table table-bordered custom-table">
-    <thead>
-    <tr>
-      <th>Month</th>
-      <th>Date</th>
-      <th>Total - Attended Days</th>
-    </tr>
-    </thead>
-    <tbody>
-    <th:block th:each="dayMonth:${dateMonthCountMap}">
-      <th:block th:each="month:${dateMonthMap}">
-        <th:block if="${month.key} == ${dayMonth.key}">
-          <tr>
-            <td th:text="${month.key}"></td>
-            <td>
-              <th:block th:each="date:${month.value}">
-                <span th:text="${date}"></span><br>
-              </th:block>
-            </td>
-            <td th:if="${dayMonth.value}"><span th:text="${dayMonth.value}"></span></td>
-          </tr>
+    <h2 class="mt-4 text-center">Welcome to Attendance - Statistics of Nahne Munhe Play Center </h2>
+    <h4 class="mt-4 text-center" th:text="${name}+' - your attendance information is mentioned below'"></h4>
+    <table class="table table-bordered custom-table">
+        <thead>
+        <tr>
+            <th>Month</th>
+            <th>Date</th>
+            <th>Total - Attended Days</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="month:${dateMonthMap}">
+            <tr>
+                <td th:text="${month.key}"></td>
+                <th:block th:each="dateMonth:${month.value}">
+                    <td>
+                        <th:block th:each="date:${dateMonth.key}">
+                            <span th:text="${date}"></span><br>
+                        </th:block>
+                    </td>
+                    <td th:text="${dateMonth.value}"></td>
+                </th:block>
+            </tr>
         </th:block>
-      </th:block>
-    </th:block>
-    </tbody>
-  </table>
+        </tbody>
+    </table>
 </div>
 
 <!-- Include Bootstrap JavaScript (optional, for interactive features) -->
