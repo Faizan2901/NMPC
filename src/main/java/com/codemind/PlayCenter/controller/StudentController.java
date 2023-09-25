@@ -38,7 +38,7 @@ public class StudentController {
     private void getMonth() {
 
         monthMap.put("JANUARY", "01");
-        monthMap.put("FEBUARY", "02");
+        monthMap.put("FEBRUARY", "02");
         monthMap.put("MARCH", "03");
         monthMap.put("APRIL", "04");
         monthMap.put("MAY", "05");
@@ -61,8 +61,6 @@ public class StudentController {
         LocalDate date2 = LocalDate.now();
         List<String> attendanceMonth = new ArrayList<>();
         while (admissionDate.isBefore(date2)) {
-//            System.out.println(admissionDate.toString());
-//            System.out.println(admissionDate.getMonth()+"-"+admissionDate.getYear());
             attendanceMonth.add(admissionDate.getMonth() + "-" + admissionDate.getYear());
             admissionDate = admissionDate.plus(Period.ofMonths(1));
         }
@@ -79,9 +77,6 @@ public class StudentController {
             return "redirect:/student/student-info";
         }
 
-//        for(String month:selectedMonth){
-//            System.out.println(month);
-//        }
         model.addAttribute("selectedMonth", selectedMonth);
         httpSession.setAttribute("selectedMonth", selectedMonth);
         return "redirect:/student/statistics";
@@ -92,33 +87,24 @@ public class StudentController {
 
         List<String> months = new ArrayList<>();
 
-        Student student=studentDAO.findByUserName(authController.getAuthenticateUserName());
+        Student student = studentDAO.findByUserName(authController.getAuthenticateUserName());
 
-        Map<String, Map<List<Date>,Integer>> dateMonthMap = new HashMap<>();
+        Map<String, Map<List<Date>, Integer>> dateMonthMap = new HashMap<>();
 
-//        Map<String, Integer> dateMonthCountMap = new HashMap<>();
         months = (List<String>) httpSession.getAttribute("selectedMonth");
 
         for (String month : months) {
             List<Date> dates = studentAttendanceDAO.findAttendanceByStudentNameAndMonth(authController.getAuthenticateUserName(), monthMap.get(month.substring(0, month.indexOf("-"))));
             int dayCount = studentAttendanceDAO.findAttendanceDaysByStudentNameAndMonth(authController.getAuthenticateUserName(), monthMap.get(month.substring(0, month.indexOf("-"))));
             if (dayCount > 0) {
-                HashMap<List<Date>,Integer> dateCountMap=new HashMap<>();
-                dateCountMap.put(dates,dayCount);
-//                dateMonthCountMap.put(month, dayCount);
+                HashMap<List<Date>, Integer> dateCountMap = new HashMap<>();
+                dateCountMap.put(dates, dayCount);
                 dateMonthMap.put(month, dateCountMap);
             }
         }
 
-//        for (Map.Entry<String, List<Date>> entry : dateMonthMap.entrySet()) {
-//            System.out.print("Key = " + entry.getKey() + "->");
-//            for (Date date : entry.getValue()) {
-//                System.out.print(date.toString() + ", ");
-//            }
-//        }
-//        model.addAttribute("dateMonthMap", dateMonthMap);
         model.addAttribute("dateMonthMap", dateMonthMap);
-        model.addAttribute("name",student.getFirstName()+" "+student.getLastName());
+        model.addAttribute("name", student.getFirstName() + " " + student.getLastName());
         return "/homeDirectory/show-attendance-statistics";
     }
 }

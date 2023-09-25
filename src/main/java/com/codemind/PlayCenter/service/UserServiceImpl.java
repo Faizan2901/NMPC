@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     StudentDAO studentDAO;
@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Student student=studentDAO.findByUserName(username);
-        if(student==null){
+        Student student = studentDAO.findByUserName(username);
+        if (student == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         Collection<SimpleGrantedAuthority> authorities = mapRolesToAuthorities(student.getRoles());
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
                 authorities);
     }
 
-    private Collection<SimpleGrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+    private Collection<SimpleGrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
         for (Role tempRole : roles) {
@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService{
     public Student findByUserName(String userName) {
         return studentDAO.findByUserName(userName);
     }
-
 
 
 }

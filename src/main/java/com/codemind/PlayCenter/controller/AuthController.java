@@ -8,13 +8,13 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class AuthController {
 
-    public String getAuthenticateUserName(){
+    public String getAuthenticateUserName() {
 
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(authentication!= null){
+        if (authentication != null) {
             return authentication.getName();
-        }else{
+        } else {
             return null;
         }
 

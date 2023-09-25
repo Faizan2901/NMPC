@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ContactController {
 
     @GetMapping("/issuesLogin")
-    private String issuesWithLogin(){
+    private String issuesWithLogin() {
         return "/homeDirectory/issues-handle/issues-page";
     }
 }

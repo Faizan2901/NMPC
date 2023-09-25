@@ -30,46 +30,45 @@ public class DashBoardController {
     StudentAttendanceDAO studentAttendanceDAO;
 
     @GetMapping("/dash-board")
-    private String getDashboardPage(Model model){
+    private String getDashboardPage(Model model) {
 
-        String authenticateUserName=authController.getAuthenticateUserName();
-        Student student=studentDAO.findByUserName(authenticateUserName);
+        String authenticateUserName = authController.getAuthenticateUserName();
+        Student student = studentDAO.findByUserName(authenticateUserName);
 
 
-        List<StudentAttendance> studentAttendance=studentAttendanceDAO.findByDate(LocalDate.now());
+        List<StudentAttendance> studentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
 
-        if(!studentAttendance.isEmpty()){
-            model.addAttribute("isHave",true);
+        if (!studentAttendance.isEmpty()) {
+            model.addAttribute("isHave", true);
         }
 
 
-        model.addAttribute("userdetails",student.getFirstName()+" "+student.getLastName());
+        model.addAttribute("userdetails", student.getFirstName() + " " + student.getLastName());
 
 
         return "/homeDirectory/login/dash-board";
     }
 
     @GetMapping("/fill-attendance")
-    private String getAllStudentForAttendance(Model model){
-        List<Student> studentList=studentDAO.findAll();
+    private String getAllStudentForAttendance(Model model) {
+        List<Student> studentList = studentDAO.findAll();
 
-        List<Student> students=new ArrayList<>();
+        List<Student> students = new ArrayList<>();
 
-        List<Student> attendedStudents=new ArrayList<>();
+        List<Student> attendedStudents = new ArrayList<>();
 
-        boolean isPresentAttended=false;
-        boolean isNotDoneAttendance=false;
-        for(Student tempStudent:studentList)
-        {
-            List<Role> stuRole=tempStudent.getRoles();
-            for(Role role:stuRole){
-                    if(role.getName().equals("ROLE_STUDENT")){
-                    StudentAttendance studentAttendance=studentAttendanceDAO.findByStudentUsernameAndDate(tempStudent.getUserName(),LocalDate.now());
-                    if(studentAttendance!=null){
-                        isPresentAttended=true;
+        boolean isPresentAttended = false;
+        boolean isNotDoneAttendance = false;
+        for (Student tempStudent : studentList) {
+            List<Role> stuRole = tempStudent.getRoles();
+            for (Role role : stuRole) {
+                if (role.getName().equals("ROLE_STUDENT")) {
+                    StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentUsernameAndDate(tempStudent.getUserName(), LocalDate.now());
+                    if (studentAttendance != null) {
+                        isPresentAttended = true;
                         attendedStudents.add(tempStudent);
-                    }else{
-                        isNotDoneAttendance=true;
+                    } else {
+                        isNotDoneAttendance = true;
                         students.add(tempStudent);
                     }
                     break;
@@ -78,28 +77,27 @@ public class DashBoardController {
         }
 
         LocalDate date = LocalDate.now();
-        model.addAttribute("isDoneStudent",isPresentAttended);
-        model.addAttribute("attendanceDoneStudent",attendedStudents);
-        model.addAttribute("isNotDoneAttendance",isNotDoneAttendance);
-        model.addAttribute("allStudents",students);
-        model.addAttribute("todayDate",date);
+        model.addAttribute("isDoneStudent", isPresentAttended);
+        model.addAttribute("attendanceDoneStudent", attendedStudents);
+        model.addAttribute("isNotDoneAttendance", isNotDoneAttendance);
+        model.addAttribute("allStudents", students);
+        model.addAttribute("todayDate", date);
         return "/homeDirectory/attendance-page";
     }
 
     @PostMapping("/fill-info")
-    private String showAttendedStudent(@RequestParam(name = "selectedItems", required = false) List<String> selectedItems,Model model){
+    private String showAttendedStudent(@RequestParam(name = "selectedItems", required = false) List<String> selectedItems, Model model) {
 
-        List<StudentAttendance> tempStudentAttendance=studentAttendanceDAO.findByDate(LocalDate.now());
+        List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
 
-        if(selectedItems==null && tempStudentAttendance.isEmpty()){
+        if (selectedItems == null && tempStudentAttendance.isEmpty()) {
             return "redirect:/dashboard/fill-attendance";
         }
 
-        if(selectedItems!=null){
-            for(String selectString:selectedItems)
-            {
-                Student student=studentDAO.findByUserName(selectString);
-                StudentAttendance studentAttendance=new StudentAttendance();
+        if (selectedItems != null) {
+            for (String selectString : selectedItems) {
+                Student student = studentDAO.findByUserName(selectString);
+                StudentAttendance studentAttendance = new StudentAttendance();
                 studentAttendance.setStudentId(student.getId());
                 studentAttendance.setStudentUsername(student.getUserName());
                 studentAttendance.setDate(Date.valueOf(LocalDate.now()));
@@ -107,45 +105,43 @@ public class DashBoardController {
             }
             return "redirect:/dashboard/attended-student";
 
-        }
-        else
-        {
-            model.addAttribute("isNull",true);
+        } else {
+            model.addAttribute("isNull", true);
             return "redirect:/dashboard/attended-student";
         }
     }
 
 
     @GetMapping("/attended-student")
-    private String showAttendedStudentList(Model model){
+    private String showAttendedStudentList(Model model) {
 
-        List<StudentAttendance> studentAttendance=studentAttendanceDAO.findByDate(LocalDate.now());
+        List<StudentAttendance> studentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
 
-        List<Student> allStudents=new ArrayList<>();
+        List<Student> allStudents = new ArrayList<>();
 
-        for(StudentAttendance attendance:studentAttendance){
-            Optional<Student> tempStudent=studentDAO.findById(attendance.getStudentId());
+        for (StudentAttendance attendance : studentAttendance) {
+            Optional<Student> tempStudent = studentDAO.findById(attendance.getStudentId());
             Student student = tempStudent.get();
             allStudents.add(student);
         }
 
-        model.addAttribute("allStudents",allStudents);
-        model.addAttribute("todayDate",LocalDate.now());
+        model.addAttribute("allStudents", allStudents);
+        model.addAttribute("todayDate", LocalDate.now());
 
         return "/homeDirectory/attended-student-list";
     }
 
     @GetMapping("/deleteUser")
-    String deleteStudentFromAttendanceList(@RequestParam("studentId") String id){
+    String deleteStudentFromAttendanceList(@RequestParam("studentId") String id) {
 
-        Optional<Student> tempStudent=studentDAO.findById(Integer.parseInt(id));
-        Student student=tempStudent.get();
+        Optional<Student> tempStudent = studentDAO.findById(Integer.parseInt(id));
+        Student student = tempStudent.get();
 
-        StudentAttendance studentAttendance=studentAttendanceDAO.findByStudentUsernameAndDate(student.getUserName(),LocalDate.now());
+        StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentUsernameAndDate(student.getUserName(), LocalDate.now());
 
         studentAttendanceDAO.delete(studentAttendance);
 
-        if(studentAttendanceDAO.findByDate(LocalDate.now()).isEmpty()){
+        if (studentAttendanceDAO.findByDate(LocalDate.now()).isEmpty()) {
             return "redirect:/dashboard/fill-attendance";
         }
 

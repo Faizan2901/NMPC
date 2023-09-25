@@ -10,13 +10,13 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface StudentAttendanceDAO extends JpaRepository<StudentAttendance,Integer> {
+public interface StudentAttendanceDAO extends JpaRepository<StudentAttendance, Integer> {
 
     List<StudentAttendance> findByStudentUsername(String userName);
 
     List<StudentAttendance> findByDate(LocalDate date);
 
-    StudentAttendance findByStudentUsernameAndDate(String userName,LocalDate date);
+    StudentAttendance findByStudentUsernameAndDate(String userName, LocalDate date);
 
     @Query(value = "SELECT s.date FROM StudentAttendance s WHERE s.studentUsername = :userName AND s.date LIKE %:dateMonth%")
     List<Date> findAttendanceByStudentNameAndMonth(@Param("userName") String userName, @Param("dateMonth") String dateMonth);

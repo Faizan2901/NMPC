@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class DefaultController {
 
     @GetMapping("/nmpc-home")
-    private String showHomePage(){
+    private String showHomePage() {
         return "/homeDirectory/home-Page";
     }
 }

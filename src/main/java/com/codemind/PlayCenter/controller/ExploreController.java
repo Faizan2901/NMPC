@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ExploreController {
 
     @GetMapping("/explorePage")
-    private String showExplorePage(){
+    private String showExplorePage() {
         return "/homeDirectory/explore-page";
     }
 }

@@ -14,7 +14,7 @@ public class LoginController {
     SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
     @GetMapping("/loginPage")
-    private String getLoginPage(){
+    private String getLoginPage() {
         return "/homeDirectory/login/login-page";
     }
 
