@@ -63,7 +63,7 @@ public class DashBoardController {
             List<Role> stuRole = tempStudent.getRoles();
             for (Role role : stuRole) {
                 if (role.getName().equals("ROLE_STUDENT")) {
-                    StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentUsernameAndDate(tempStudent.getUserName(), LocalDate.now());
+                    StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(tempStudent.getId(), LocalDate.now());
                     if (studentAttendance != null) {
                         isPresentAttended = true;
                         attendedStudents.add(tempStudent);
@@ -99,7 +99,6 @@ public class DashBoardController {
                 Student student = studentDAO.findByUserName(selectString);
                 StudentAttendance studentAttendance = new StudentAttendance();
                 studentAttendance.setStudentId(student.getId());
-                studentAttendance.setStudentUsername(student.getUserName());
                 studentAttendance.setDate(Date.valueOf(LocalDate.now()));
                 studentAttendanceDAO.save(studentAttendance);
             }
@@ -137,7 +136,7 @@ public class DashBoardController {
         Optional<Student> tempStudent = studentDAO.findById(Integer.parseInt(id));
         Student student = tempStudent.get();
 
-        StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentUsernameAndDate(student.getUserName(), LocalDate.now());
+        StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(student.getId(), LocalDate.now());
 
         studentAttendanceDAO.delete(studentAttendance);
 

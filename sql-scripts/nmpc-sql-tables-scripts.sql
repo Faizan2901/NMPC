@@ -97,3 +97,7 @@ VALUES
 (1, 1),
 (2, 2),
 (3, 3)
+
+
+ALTER TABLE `nmpc`.`student_attendance`
+DROP COLUMN `stu_username`;

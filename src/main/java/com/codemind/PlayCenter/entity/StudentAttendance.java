@@ -19,9 +19,6 @@ public class StudentAttendance {
     @Column(name = "stu_id")
     private Integer studentId;
 
-    @Column(name = "stu_username")
-    private String studentUsername;
-
     @Column(name = "date")
     private Date date;
 

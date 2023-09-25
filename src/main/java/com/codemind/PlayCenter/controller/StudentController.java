@@ -94,8 +94,8 @@ public class StudentController {
         months = (List<String>) httpSession.getAttribute("selectedMonth");
 
         for (String month : months) {
-            List<Date> dates = studentAttendanceDAO.findAttendanceByStudentNameAndMonth(authController.getAuthenticateUserName(), monthMap.get(month.substring(0, month.indexOf("-"))));
-            int dayCount = studentAttendanceDAO.findAttendanceDaysByStudentNameAndMonth(authController.getAuthenticateUserName(), monthMap.get(month.substring(0, month.indexOf("-"))));
+            List<Date> dates = studentAttendanceDAO.findAttendanceByStudentIdAndMonth(student.getId(), monthMap.get(month.substring(0, month.indexOf("-"))));
+            int dayCount = studentAttendanceDAO.findAttendanceDaysByStudentIdAndMonth(student.getId(), monthMap.get(month.substring(0, month.indexOf("-"))));
             if (dayCount > 0) {
                 HashMap<List<Date>, Integer> dateCountMap = new HashMap<>();
                 dateCountMap.put(dates, dayCount);

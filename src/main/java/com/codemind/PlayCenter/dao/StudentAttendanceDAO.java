@@ -12,16 +12,14 @@ import java.util.List;
 
 public interface StudentAttendanceDAO extends JpaRepository<StudentAttendance, Integer> {
 
-    List<StudentAttendance> findByStudentUsername(String userName);
-
     List<StudentAttendance> findByDate(LocalDate date);
 
-    StudentAttendance findByStudentUsernameAndDate(String userName, LocalDate date);
+    StudentAttendance findByStudentIdAndDate(int id, LocalDate date);
 
-    @Query(value = "SELECT s.date FROM StudentAttendance s WHERE s.studentUsername = :userName AND s.date LIKE %:dateMonth%")
-    List<Date> findAttendanceByStudentNameAndMonth(@Param("userName") String userName, @Param("dateMonth") String dateMonth);
+    @Query(value = "SELECT s.date FROM StudentAttendance s WHERE s.studentId = :id AND s.date LIKE %:dateMonth%")
+    List<Date> findAttendanceByStudentIdAndMonth(@Param("id") int id, @Param("dateMonth") String dateMonth);
 
-    @Query(value = "SELECT COUNT(*) FROM StudentAttendance s WHERE s.studentUsername = :userName AND s.date LIKE %:dateMonth%")
-    int findAttendanceDaysByStudentNameAndMonth(@Param("userName") String userName, @Param("dateMonth") String dateMonth);
+    @Query(value = "SELECT COUNT(*) FROM StudentAttendance s WHERE s.studentId = :id AND s.date LIKE %:dateMonth%")
+    int findAttendanceDaysByStudentIdAndMonth(@Param("id") int id, @Param("dateMonth") String dateMonth);
 
 }
