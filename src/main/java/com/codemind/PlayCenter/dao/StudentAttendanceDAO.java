@@ -2,7 +2,9 @@ package com.codemind.PlayCenter.dao;
 
 
 import com.codemind.PlayCenter.entity.StudentAttendance;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -22,4 +24,6 @@ public interface StudentAttendanceDAO extends JpaRepository<StudentAttendance, I
     @Query(value = "SELECT COUNT(*) FROM StudentAttendance s WHERE s.studentId = :id AND s.date LIKE %:dateMonth%")
     int findAttendanceDaysByStudentIdAndMonth(@Param("id") int id, @Param("dateMonth") String dateMonth);
 
+    @Query(value = "SELECT s FROM StudentAttendance s WHERE s.studentId = :id")
+    List<StudentAttendance> findAttendanceByStudentId(@Param("id") int id);
 }

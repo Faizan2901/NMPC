@@ -126,6 +126,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
+            <div class="card">
+                <img th:src="@{/images/admin.png}" class="card-img-top" alt="Admin">
+                <div class="card-body">
+                    <h5 class="card-title">Admin Section</h5>
+                    <p class="card-text">View Details</p>
+                    <a th:href="@{/dashboard/show-user}" class="btn btn-primary">View Users</a>
+                </div>
+            </div>
+        </div>
         <div class="col-md-4" th:if="${isHave}" sec:authorize="hasRole('TEACHER')">
             <div class="card">
                 <img th:src="@{/images/attendance.jpg}" class="card-img-top" alt="Announcements">

@@ -148,5 +148,30 @@ public class DashBoardController {
 
     }
 
+    @GetMapping("/show-user")
+    private String showUser(Model model) {
+
+        List<Student> allUser = studentDAO.findAll();
+
+        List<Student> allStudent = new ArrayList<>();
+
+        List<Student> allTeacher = new ArrayList<>();
+
+        for (Student student : allUser) {
+            List<Role> roles = student.getRoles();
+            for (Role role : roles) {
+                if (role.getId() == 1) {
+                    allStudent.add(student);
+                } else if (role.getId() == 2) {
+                    allTeacher.add(student);
+                }
+            }
+
+        }
+
+        model.addAttribute("allStudent", allStudent);
+        model.addAttribute("allTeacher", allTeacher);
+        return "/homeDirectory/show-user";
+    }
 
 }
