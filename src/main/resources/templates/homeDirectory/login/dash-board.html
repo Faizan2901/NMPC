@@ -84,7 +84,7 @@
         <!-- Student Information Card -->
         <div class="col-md-4" sec:authorize="hasRole('STUDENT')">
             <div class="card">
-                <img src="student.jpg" class="card-img-top" alt="Student">
+                <img th:src="@{'/images/'+${image}}" class="card-img-top" alt="Student">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${userdetails}"></h5>
                     <p class="card-text">View your details.</p>

@@ -42,7 +42,7 @@ public class DashBoardController {
             model.addAttribute("isHave", true);
         }
 
-
+        model.addAttribute("image",student.getId()+"_"+student.getUserName()+".jpg");
         model.addAttribute("userdetails", student.getFirstName() + " " + student.getLastName());
 
 
