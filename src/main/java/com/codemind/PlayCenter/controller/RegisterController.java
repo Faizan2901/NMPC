@@ -42,14 +42,10 @@ public class RegisterController {
         String userName = webUser.getUserName();
         logger.info("Processing registration for : " + userName);
 
-        if (bindingResult.hasErrors()) {
-            return "/homeDirectory/register/register-page";
-        }
-
         Student student = userService.findByUserName(userName);
 
         if (student != null) {
-            model.addAttribute("webUser", new WebUser());
+            model.addAttribute("isExists",true);
             model.addAttribute("registrationError", "Username already exists!");
 
             logger.warning("Username already exists.");
