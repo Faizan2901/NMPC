@@ -1,15 +1,68 @@
 package com.codemind.PlayCenter.controller;
 
+import com.codemind.PlayCenter.entity.Student;
+import com.codemind.PlayCenter.service.UserService;
+import com.codemind.PlayCenter.user.WebUser;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
 
+    private Logger logger = Logger.getLogger(getClass().getName());
+
+    @Autowired
+    UserService userService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder webDataBinder){
+
+        StringTrimmerEditor stringTrimmerEditor=new StringTrimmerEditor(true);
+        webDataBinder.registerCustomEditor(String.class,stringTrimmerEditor);
+
+    }
     @GetMapping("/registerPage")
-    private String issuesWithLogin() {
+    private String showRegisterPage(Model model) {
+
+        model.addAttribute("webUser", new WebUser());
         return "/homeDirectory/register/register-page";
+    }
+
+    @PostMapping("/processData")
+    private String processRegisterData(@ModelAttribute("webUser") WebUser webUser, BindingResult bindingResult, Model model, HttpSession httpSession) {
+        String userName = webUser.getUserName();
+        logger.info("Processing registration for : " + userName);
+
+        if(bindingResult.hasErrors()){
+            return "/homeDirectory/register/register-page";
+        }
+
+        Student student = userService.findByUserName(userName);
+
+        if (student != null) {
+            model.addAttribute("webUser", new WebUser());
+            model.addAttribute("registrationError", "Username already exists!");
+
+            logger.warning("Username already exists.");
+            return "/homeDirectory/register/register-page";
+        }
+
+        userService.save(webUser);
+        logger.info("Successfully created user : "+userName);
+
+        httpSession.setAttribute("user",webUser);
+
+        return "redirect:/loginPage";
+
+
     }
 }
