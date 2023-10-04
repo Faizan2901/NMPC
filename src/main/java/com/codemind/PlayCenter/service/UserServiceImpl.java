@@ -1,15 +1,19 @@
 package com.codemind.PlayCenter.service;
 
+import com.codemind.PlayCenter.dao.RoleDAO;
 import com.codemind.PlayCenter.dao.StudentDAO;
 import com.codemind.PlayCenter.entity.Role;
 import com.codemind.PlayCenter.entity.Student;
+import com.codemind.PlayCenter.user.WebUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Service
@@ -17,6 +21,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     StudentDAO studentDAO;
+
+    @Autowired
+    RoleDAO roleDAO;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Override
@@ -30,6 +40,21 @@ public class UserServiceImpl implements UserService {
 
         return new org.springframework.security.core.userdetails.User(student.getUserName(), student.getPassword(),
                 authorities);
+    }
+
+    public void save(WebUser webUser) {
+
+        Student student = new Student();
+        student.setUserName(webUser.getUserName());
+        student.setPassword(bCryptPasswordEncoder.encode(webUser.getPassword()));
+        student.setFirstName(webUser.getFirstName());
+        student.setLastName(webUser.getLastName());
+        student.setEmail(webUser.getEmail());
+
+        student.setRoles(Arrays.asList(roleDAO.findByName("ROLE_STUDENT")));
+
+        studentDAO.save(student);
+
     }
 
     private Collection<SimpleGrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
