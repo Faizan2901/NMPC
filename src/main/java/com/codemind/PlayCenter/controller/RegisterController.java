@@ -18,18 +18,18 @@ import java.util.logging.Logger;
 @RequestMapping("/register")
 public class RegisterController {
 
-    private Logger logger = Logger.getLogger(getClass().getName());
-
+    private final Logger logger = Logger.getLogger(getClass().getName());
     @Autowired
     UserService userService;
 
     @InitBinder
-    public void initBinder(WebDataBinder webDataBinder){
+    public void initBinder(WebDataBinder webDataBinder) {
 
-        StringTrimmerEditor stringTrimmerEditor=new StringTrimmerEditor(true);
-        webDataBinder.registerCustomEditor(String.class,stringTrimmerEditor);
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 
     }
+
     @GetMapping("/registerPage")
     private String showRegisterPage(Model model) {
 
@@ -42,7 +42,7 @@ public class RegisterController {
         String userName = webUser.getUserName();
         logger.info("Processing registration for : " + userName);
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "/homeDirectory/register/register-page";
         }
 
@@ -57,9 +57,9 @@ public class RegisterController {
         }
 
         userService.save(webUser);
-        logger.info("Successfully created user : "+userName);
+        logger.info("Successfully created user : " + userName);
 
-        httpSession.setAttribute("user",webUser);
+        httpSession.setAttribute("user", webUser);
 
         return "redirect:/loginPage";
 

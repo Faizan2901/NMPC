@@ -34,6 +34,7 @@
         .error {
             color: red;
         }
+
     </style>
 </head>
 
@@ -48,19 +49,21 @@
         <h2 class="text-center mb-4">User Registration</h2>
         <form id="registration-form" th:action="@{/register/processData}" th:object="${webUser}" method="post">
             <div class="form-group">
-                <div class="col-xs-15"><div>
+                <div class="col-xs-15">
+                    <div>
 
-                    <!-- Check for login error -->
+                        <!-- Check for login error -->
 
-                    <div th:if="${param.registrationError}">
+                        <div th:if="${param.registrationError}">
 
-                        <div class="alert alert-danger col-xs-offset-1 col-xs-10">
-                            <span th:text="${param.registrationError}"></span>
+                            <div class="alert alert-danger col-xs-offset-1 col-xs-10">
+                                <span th:text="${param.registrationError}"></span>
+                            </div>
+
                         </div>
 
                     </div>
-
-                </div></div>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
@@ -87,7 +90,8 @@
                 <input type="email" class="form-control" id="email" th:field="*{email}">
                 <div id="email-error" class="error"></div>
                 <div class="d-grid gap-2 col-12 mt-4">
-                    <button type="button" onclick="validateForm()" class="btn btn-primary btn-block">Create Account</button>
+                    <button type="button" onclick="validateForm()" class="btn btn-primary btn-block">Create Account
+                    </button>
                 </div>
             </div>
         </form>
