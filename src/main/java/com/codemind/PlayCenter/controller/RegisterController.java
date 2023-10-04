@@ -46,7 +46,7 @@ public class RegisterController {
 
         if (student != null) {
             model.addAttribute("isExists",true);
-            model.addAttribute("registrationError", "Username already exists!");
+//            model.addAttribute("registrationError", "Username already exists!");
 
             logger.warning("Username already exists.");
             return "/homeDirectory/register/register-page";
