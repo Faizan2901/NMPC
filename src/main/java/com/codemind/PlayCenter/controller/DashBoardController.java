@@ -20,158 +20,160 @@ import java.util.Optional;
 @RequestMapping("/dashboard")
 public class DashBoardController {
 
-    @Autowired
-    AuthController authController;
+	@Autowired
+	AuthController authController;
 
-    @Autowired
-    StudentDAO studentDAO;
+	@Autowired
+	StudentDAO studentDAO;
 
-    @Autowired
-    StudentAttendanceDAO studentAttendanceDAO;
+	@Autowired
+	StudentAttendanceDAO studentAttendanceDAO;
 
-    @GetMapping("/dash-board")
-    private String getDashboardPage(Model model) {
+	@GetMapping("/dash-board")
+	private String getDashboardPage(Model model) {
 
-        String authenticateUserName = authController.getAuthenticateUserName();
-        Student student = studentDAO.findByUserName(authenticateUserName);
+		String authenticateUserName = authController.getAuthenticateUserName();
+		Student student = studentDAO.findByUserName(authenticateUserName);
 
+		List<StudentAttendance> studentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
 
-        List<StudentAttendance> studentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
+		if (!studentAttendance.isEmpty()) {
+			model.addAttribute("isHave", true);
+		}
 
-        if (!studentAttendance.isEmpty()) {
-            model.addAttribute("isHave", true);
-        }
+		model.addAttribute("image", student.getId() + "_" + student.getUserName() + ".jpg");
+		model.addAttribute("userdetails", student.getFirstName() + " " + student.getLastName());
 
-        model.addAttribute("image",student.getId()+"_"+student.getUserName()+".jpg");
-        model.addAttribute("userdetails", student.getFirstName() + " " + student.getLastName());
+		return "/homeDirectory/login/dash-board";
+	}
 
+	@GetMapping("/fill-attendance")
+	private String getAllStudentForAttendance(Model model) {
+		List<Student> studentList = studentDAO.findAll();
 
-        return "/homeDirectory/login/dash-board";
-    }
+		List<Student> students = new ArrayList<>();
 
-    @GetMapping("/fill-attendance")
-    private String getAllStudentForAttendance(Model model) {
-        List<Student> studentList = studentDAO.findAll();
+		List<Student> attendedStudents = new ArrayList<>();
 
-        List<Student> students = new ArrayList<>();
+		boolean isPresentAttended = false;
+		boolean isNotDoneAttendance = false;
+		for (Student tempStudent : studentList) {
+			List<Role> stuRole = tempStudent.getRoles();
+			for (Role role : stuRole) {
+				if (role.getName().equals("ROLE_STUDENT")) {
+					StudentAttendance studentAttendance = studentAttendanceDAO
+							.findByStudentIdAndDate(tempStudent.getId(), LocalDate.now());
+					if (studentAttendance != null) {
+						isPresentAttended = true;
+						attendedStudents.add(tempStudent);
+					} else {
+						isNotDoneAttendance = true;
+						students.add(tempStudent);
+					}
+					break;
+				}
+			}
+		}
 
-        List<Student> attendedStudents = new ArrayList<>();
+		LocalDate date = LocalDate.now();
+		model.addAttribute("isDoneStudent", isPresentAttended);
+		model.addAttribute("attendanceDoneStudent", attendedStudents);
+		model.addAttribute("isNotDoneAttendance", isNotDoneAttendance);
+		model.addAttribute("allStudents", students);
+		model.addAttribute("todayDate", date);
+		return "/homeDirectory/attendance-page";
+	}
 
-        boolean isPresentAttended = false;
-        boolean isNotDoneAttendance = false;
-        for (Student tempStudent : studentList) {
-            List<Role> stuRole = tempStudent.getRoles();
-            for (Role role : stuRole) {
-                if (role.getName().equals("ROLE_STUDENT")) {
-                    StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(tempStudent.getId(), LocalDate.now());
-                    if (studentAttendance != null) {
-                        isPresentAttended = true;
-                        attendedStudents.add(tempStudent);
-                    } else {
-                        isNotDoneAttendance = true;
-                        students.add(tempStudent);
-                    }
-                    break;
-                }
-            }
-        }
+	@PostMapping("/fill-info")
+	private String showAttendedStudent(
+			@RequestParam(name = "selectedItems", required = false) List<String> selectedItems, Model model) {
 
-        LocalDate date = LocalDate.now();
-        model.addAttribute("isDoneStudent", isPresentAttended);
-        model.addAttribute("attendanceDoneStudent", attendedStudents);
-        model.addAttribute("isNotDoneAttendance", isNotDoneAttendance);
-        model.addAttribute("allStudents", students);
-        model.addAttribute("todayDate", date);
-        return "/homeDirectory/attendance-page";
-    }
+		if (selectedItems == null || selectedItems.isEmpty()) {
+			return "redirect:/dashboard/fill-attendance";
+		}
 
-    @PostMapping("/fill-info")
-    private String showAttendedStudent(@RequestParam(name = "selectedItems", required = false) List<String> selectedItems, Model model) {
+		LocalDate currentDate = LocalDate.now();
+		List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(currentDate);
 
-        List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
+		if (!tempStudentAttendance.isEmpty()) {
+			return "redirect:/dashboard/attended-student";
+		}
 
-        if (selectedItems == null && tempStudentAttendance.isEmpty()) {
-            return "redirect:/dashboard/fill-attendance";
-        }
+		for (String selectString : selectedItems) {
+			Student student = studentDAO.findByUserName(selectString);
+			if (student != null) {
+				StudentAttendance studentAttendance = new StudentAttendance();
+				studentAttendance.setStudentId(student.getId());
+				studentAttendance.setDate(Date.valueOf(currentDate));
+				studentAttendanceDAO.save(studentAttendance);
+			}
+		}
 
-        if (selectedItems != null) {
-            for (String selectString : selectedItems) {
-                Student student = studentDAO.findByUserName(selectString);
-                StudentAttendance studentAttendance = new StudentAttendance();
-                studentAttendance.setStudentId(student.getId());
-                studentAttendance.setDate(Date.valueOf(LocalDate.now()));
-                studentAttendanceDAO.save(studentAttendance);
-            }
-            return "redirect:/dashboard/attended-student";
+		return "redirect:/dashboard/attended-student";
+	}
 
-        } else {
-            model.addAttribute("isNull", true);
-            return "redirect:/dashboard/attended-student";
-        }
-    }
+	@GetMapping("/attended-student")
+	private String showAttendedStudentList(Model model) {
 
+		List<StudentAttendance> studentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
 
-    @GetMapping("/attended-student")
-    private String showAttendedStudentList(Model model) {
+		List<Student> allStudents = new ArrayList<>();
 
-        List<StudentAttendance> studentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
+		for (StudentAttendance attendance : studentAttendance) {
+			Optional<Student> tempStudent = studentDAO.findById(attendance.getStudentId());
+			Student student = tempStudent.get();
+			allStudents.add(student);
+		}
 
-        List<Student> allStudents = new ArrayList<>();
+		model.addAttribute("allStudents", allStudents);
+		model.addAttribute("todayDate", LocalDate.now());
 
-        for (StudentAttendance attendance : studentAttendance) {
-            Optional<Student> tempStudent = studentDAO.findById(attendance.getStudentId());
-            Student student = tempStudent.get();
-            allStudents.add(student);
-        }
+		return "/homeDirectory/attended-student-list";
+	}
 
-        model.addAttribute("allStudents", allStudents);
-        model.addAttribute("todayDate", LocalDate.now());
+	@GetMapping("/deleteUser")
+	String deleteStudentFromAttendanceList(@RequestParam("studentId") String id) {
 
-        return "/homeDirectory/attended-student-list";
-    }
+		Optional<Student> tempStudent = studentDAO.findById(Integer.parseInt(id));
+		Student student = tempStudent.get();
 
-    @GetMapping("/deleteUser")
-    String deleteStudentFromAttendanceList(@RequestParam("studentId") String id) {
+		StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(student.getId(),
+				LocalDate.now());
 
-        Optional<Student> tempStudent = studentDAO.findById(Integer.parseInt(id));
-        Student student = tempStudent.get();
+		studentAttendanceDAO.delete(studentAttendance);
 
-        StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(student.getId(), LocalDate.now());
+		if (studentAttendanceDAO.findByDate(LocalDate.now()).isEmpty()) {
+			return "redirect:/dashboard/fill-attendance";
+		}
 
-        studentAttendanceDAO.delete(studentAttendance);
+		return "redirect:/dashboard/attended-student";
 
-        if (studentAttendanceDAO.findByDate(LocalDate.now()).isEmpty()) {
-            return "redirect:/dashboard/fill-attendance";
-        }
+	}
 
-        return "redirect:/dashboard/attended-student";
+	@GetMapping("/show-user")
+	private String showUser(Model model) {
 
-    }
+		List<Student> allUser = studentDAO.findAll();
 
-    @GetMapping("/show-user")
-    private String showUser(Model model) {
+		List<Student> allStudent = new ArrayList<>();
 
-        List<Student> allUser = studentDAO.findAll();
+		List<Student> allTeacher = new ArrayList<>();
 
-        List<Student> allStudent = new ArrayList<>();
+		for (Student student : allUser) {
+			List<Role> roles = student.getRoles();
+			for (Role role : roles) {
+				if (role.getId() == 1) {
+					allStudent.add(student);
+				} else if (role.getId() == 2) {
+					allTeacher.add(student);
+				}
+			}
 
-        List<Student> allTeacher = new ArrayList<>();
+		}
 
-        for (Student student : allUser) {
-            List<Role> roles = student.getRoles();
-            for (Role role : roles) {
-                if (role.getId() == 1) {
-                    allStudent.add(student);
-                } else if (role.getId() == 2) {
-                    allTeacher.add(student);
-                }
-            }
-
-        }
-
-        model.addAttribute("allStudent", allStudent);
-        model.addAttribute("allTeacher", allTeacher);
-        return "/homeDirectory/show-user";
-    }
+		model.addAttribute("allStudent", allStudent);
+		model.addAttribute("allTeacher", allTeacher);
+		return "/homeDirectory/show-user";
+	}
 
 }

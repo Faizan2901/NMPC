@@ -13,3 +13,17 @@ s
 Csrc/main/java/com/codemind/PlayCenter/entity/StudentAttendance.java,3/e/3e498c029b68c41560249af817a262cef1831673
 7
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+Y
+)src/main/resources/application.properties,0/6/06f65155ec73600b9fc5c4dc2883d4bb84d8e284
+o
+?src/main/resources/templates/homeDirectory/attendance-page.html,4/f/4f934e8e69faf8d8f11e09d034c47a85b6047c7e
+q
+Asrc/main/resources/templates/homeDirectory/student-dashboard.html,1/9/1975f7918852c52591da5d436804223b76b22ba7
+z
+Jsrc/main/resources/templates/homeDirectory/show-attendance-statistics.html,b/7/b763717bad52da976d8db05bbadd3b4cd712b517
+v
+Fsrc/main/resources/templates/homeDirectory/register/register-page.html,9/0/90e2d66b771dab6fd431f39a227bfba11bac865c
+x
+Hsrc/main/java/com/codemind/PlayCenter/controller/RegisterController.java,4/7/4761f46dfdc99aa92510c2872e842449f58737fa
+i
+9src/main/resources/templates/homeDirectory/home-Page.html,5/e/5ecac09bcbd4f7f6cab3d18fe27e6fcd15e4335d
