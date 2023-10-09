@@ -78,7 +78,8 @@ public class DashBoardController {
 	@PostMapping("/fill-info")
     private String showAttendedStudent(@RequestParam(name = "selectedItems", required = false) List<String> selectedItems, Model model) {
 
-        List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
+		LocalDate date=LocalDate.now();
+        List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(date);
 
         if (selectedItems == null && tempStudentAttendance.isEmpty()) {
             return "redirect:/dashboard/fill-attendance";
@@ -89,7 +90,7 @@ public class DashBoardController {
                 Student student = studentDAO.findByUserName(selectString);
                 StudentAttendance studentAttendance = new StudentAttendance();
                 studentAttendance.setStudentId(student.getId());
-                studentAttendance.setDate(Date.valueOf(LocalDate.now()));
+                studentAttendance.setDate(Date.valueOf(date));
                 studentAttendanceDAO.save(studentAttendance);
             }
             return "redirect:/dashboard/attended-student";
