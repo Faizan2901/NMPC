@@ -22,7 +22,7 @@ public class Student {
     private String password;
     
     @Column(name = "enabled")
-    private boolean enabled;
+    private int enabled;
     
     @Column(name = "first_name")
     private String firstName;
@@ -57,11 +57,11 @@ public class Student {
 		this.password = password;
 	}
 
-	public boolean isEnabled() {
+	public int isEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
 

@@ -1,6 +1,6 @@
 
-Š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¶î±ùüÿÿÿÿHÓRMINORZ
-CODE_SMELL
 \
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒHÔRMINORZ
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒHÖRMINORZ
+CODE_SMELL
+Š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¶î±ùüÿÿÿÿHØRMINORZ
 CODE_SMELL

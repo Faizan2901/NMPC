@@ -49,37 +49,28 @@ public class DashBoardController {
 
 	@GetMapping("/fill-attendance")
 	private String getAllStudentForAttendance(Model model) {
-		List<Student> studentList = studentDAO.findAll();
 
-		List<Student> students = new ArrayList<>();
+		LocalDate date = LocalDate.now();
+
+		// All User who have Student Role
+		List<Student> studentList = studentDAO.findByEnabled(1);
 
 		List<Student> attendedStudents = new ArrayList<>();
+		List<Student> studentsNotDoneAttendance = new ArrayList<>();
 
-		boolean isPresentAttended = false;
-		boolean isNotDoneAttendance = false;
-		for (Student tempStudent : studentList) {
-			List<Role> stuRole = tempStudent.getRoles();
-			for (Role role : stuRole) {
-				if (role.getName().equals("ROLE_STUDENT")) {
-					StudentAttendance studentAttendance = studentAttendanceDAO
-							.findByStudentIdAndDate(tempStudent.getId(), LocalDate.now());
-					if (studentAttendance != null) {
-						isPresentAttended = true;
-						attendedStudents.add(tempStudent);
-					} else {
-						isNotDoneAttendance = true;
-						students.add(tempStudent);
-					}
-					break;
-				}
+		for (Student student : studentList) {
+			StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(student.getId(), date);
+			if (studentAttendance != null) {
+				attendedStudents.add(student);
+			} else {
+				studentsNotDoneAttendance.add(student);
 			}
 		}
 
-		LocalDate date = LocalDate.now();
-		model.addAttribute("isDoneStudent", isPresentAttended);
+		model.addAttribute("isDoneStudent", !attendedStudents.isEmpty());
 		model.addAttribute("attendanceDoneStudent", attendedStudents);
-		model.addAttribute("isNotDoneAttendance", isNotDoneAttendance);
-		model.addAttribute("allStudents", students);
+		model.addAttribute("isNotDoneAttendance", !studentsNotDoneAttendance.isEmpty());
+		model.addAttribute("allStudents", studentsNotDoneAttendance);
 		model.addAttribute("todayDate", date);
 		return "/homeDirectory/attendance-page";
 	}
@@ -134,15 +125,16 @@ public class DashBoardController {
 	@GetMapping("/deleteUser")
 	String deleteStudentFromAttendanceList(@RequestParam("studentId") String id) {
 
+		LocalDate date = LocalDate.now();
+
 		Optional<Student> tempStudent = studentDAO.findById(Integer.parseInt(id));
 		Student student = tempStudent.get();
 
-		StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(student.getId(),
-				LocalDate.now());
+		StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(student.getId(), date);
 
 		studentAttendanceDAO.delete(studentAttendance);
 
-		if (studentAttendanceDAO.findByDate(LocalDate.now()).isEmpty()) {
+		if (studentAttendanceDAO.findByDate(date).isEmpty()) {
 			return "redirect:/dashboard/fill-attendance";
 		}
 
