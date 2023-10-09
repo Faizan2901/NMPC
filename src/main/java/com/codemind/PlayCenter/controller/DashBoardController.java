@@ -76,32 +76,29 @@ public class DashBoardController {
 	}
 
 	@PostMapping("/fill-info")
-	private String showAttendedStudent(
-			@RequestParam(name = "selectedItems", required = false) List<String> selectedItems, Model model) {
+    private String showAttendedStudent(@RequestParam(name = "selectedItems", required = false) List<String> selectedItems, Model model) {
 
-		if (selectedItems == null || selectedItems.isEmpty()) {
-			return "redirect:/dashboard/fill-attendance";
-		}
+        List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
 
-		LocalDate currentDate = LocalDate.now();
-		List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(currentDate);
+        if (selectedItems == null && tempStudentAttendance.isEmpty()) {
+            return "redirect:/dashboard/fill-attendance";
+        }
 
-		if (!tempStudentAttendance.isEmpty()) {
-			return "redirect:/dashboard/attended-student";
-		}
+        if (selectedItems != null) {
+            for (String selectString : selectedItems) {
+                Student student = studentDAO.findByUserName(selectString);
+                StudentAttendance studentAttendance = new StudentAttendance();
+                studentAttendance.setStudentId(student.getId());
+                studentAttendance.setDate(Date.valueOf(LocalDate.now()));
+                studentAttendanceDAO.save(studentAttendance);
+            }
+            return "redirect:/dashboard/attended-student";
 
-		for (String selectString : selectedItems) {
-			Student student = studentDAO.findByUserName(selectString);
-			if (student != null) {
-				StudentAttendance studentAttendance = new StudentAttendance();
-				studentAttendance.setStudentId(student.getId());
-				studentAttendance.setDate(Date.valueOf(currentDate));
-				studentAttendanceDAO.save(studentAttendance);
-			}
-		}
-
-		return "redirect:/dashboard/attended-student";
-	}
+        } else {
+            model.addAttribute("isNull", true);
+            return "redirect:/dashboard/attended-student";
+        }
+    }
 
 	@GetMapping("/attended-student")
 	private String showAttendedStudentList(Model model) {
