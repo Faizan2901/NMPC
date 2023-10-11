@@ -34,7 +34,7 @@ public class NMPCSecurity {
         httpSecurity.authorizeHttpRequests(configurer ->
 
                         configurer
-                                .requestMatchers("/nmpc-home", "/loginPage", "/explore/**", "/contact/**", "/images/**", "/css/**", "/js/**","/register/**").permitAll() // Allow access to static resources
+                                .requestMatchers("/nmpc-home", "/loginPage", "/explore/**", "/contact/**", "/images/**", "/css/**", "/js/**","/register/**","/forgot/**").permitAll() // Allow access to static resources
                                 .requestMatchers("/dashboard/show-user").hasRole("ADMIN")
                                 .anyRequest().authenticated()
 

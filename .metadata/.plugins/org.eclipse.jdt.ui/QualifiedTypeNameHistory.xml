@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Column"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="java.net.http.HttpRequest"/>
+    <fullyQualifiedTypeName name="net.bytebuddy.utility.RandomString"/>
+    <fullyQualifiedTypeName name="com.codemind.PlayCenter.dao.StudentDAO"/>
+    <fullyQualifiedTypeName name="com.codemind.PlayCenter.service.UserService"/>
+    <fullyQualifiedTypeName name="jakarta.servlet.http.HttpServletRequest"/>
+    <fullyQualifiedTypeName name="com.codemind.PlayCenter.utility.Utility"/>
+    <fullyQualifiedTypeName name="lombok.Data"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSender"/>
+    <fullyQualifiedTypeName name="org.springframework.mail.javamail.MimeMailMessage"/>
+    <fullyQualifiedTypeName name="org.springframework.mail.javamail.MimeMessageHelper"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+    <fullyQualifiedTypeName name="org.springframework.ui.Model"/>
+    <fullyQualifiedTypeName name="com.codemind.PlayCenter.entity.Student"/>
+    <fullyQualifiedTypeName name="com.codemind.PlayCenter.service.UserServiceImpl"/>
+</qualifiedTypeNameHistroy>

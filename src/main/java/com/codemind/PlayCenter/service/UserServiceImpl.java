@@ -2,6 +2,7 @@ package com.codemind.PlayCenter.service;
 
 import com.codemind.PlayCenter.dao.RoleDAO;
 import com.codemind.PlayCenter.dao.StudentDAO;
+import com.codemind.PlayCenter.dao.StudentNotFoundException;
 import com.codemind.PlayCenter.entity.Role;
 import com.codemind.PlayCenter.entity.Student;
 import com.codemind.PlayCenter.user.WebUser;
@@ -19,60 +20,81 @@ import java.util.Collection;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    StudentDAO studentDAO;
+	@Autowired
+	StudentDAO studentDAO;
 
-    @Autowired
-    RoleDAO roleDAO;
+	@Autowired
+	RoleDAO roleDAO;
 
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Student student = studentDAO.findByUserName(username);
+		if (student == null) {
+			throw new UsernameNotFoundException("Invalid username or password.");
+		}
+		Collection<SimpleGrantedAuthority> authorities = mapRolesToAuthorities(student.getRoles());
 
-        Student student = studentDAO.findByUserName(username);
-        if (student == null) {
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        Collection<SimpleGrantedAuthority> authorities = mapRolesToAuthorities(student.getRoles());
+		return new org.springframework.security.core.userdetails.User(student.getUserName(), student.getPassword(),
+				authorities);
+	}
 
-        return new org.springframework.security.core.userdetails.User(student.getUserName(), student.getPassword(),
-                authorities);
-    }
+	public void save(WebUser webUser) {
 
-    public void save(WebUser webUser) {
+		Student student = new Student();
+		student.setUserName(webUser.getUserName());
+		student.setPassword(bCryptPasswordEncoder.encode(webUser.getPassword()));
+		student.setFirstName(webUser.getFirstName());
+		student.setLastName(webUser.getLastName());
+		student.setEmail(webUser.getEmail());
 
-        Student student = new Student();
-        student.setUserName(webUser.getUserName());
-        student.setPassword(bCryptPasswordEncoder.encode(webUser.getPassword()));
-        student.setFirstName(webUser.getFirstName());
-        student.setLastName(webUser.getLastName());
-        student.setEmail(webUser.getEmail());
+		student.setRoles(Arrays.asList(roleDAO.findByName("ROLE_STUDENT")));
 
-        student.setRoles(Arrays.asList(roleDAO.findByName("ROLE_STUDENT")));
+		studentDAO.save(student);
 
-        studentDAO.save(student);
+	}
 
-    }
+	private Collection<SimpleGrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-    private Collection<SimpleGrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		for (Role tempRole : roles) {
+			SimpleGrantedAuthority tempAuthority = new SimpleGrantedAuthority(tempRole.getName());
+			authorities.add(tempAuthority);
+		}
+		return authorities;
 
-        for (Role tempRole : roles) {
-            SimpleGrantedAuthority tempAuthority = new SimpleGrantedAuthority(tempRole.getName());
-            authorities.add(tempAuthority);
-        }
-        return authorities;
+	}
 
-    }
+	@Override
+	public Student findByUserName(String userName) {
+		return studentDAO.findByUserName(userName);
+	}
 
-
-    @Override
-    public Student findByUserName(String userName) {
-        return studentDAO.findByUserName(userName);
-    }
-
-
+	public void updateResetPasswordToken(String token, String email) throws StudentNotFoundException {
+		
+		Student student=studentDAO.findByEmail(email);
+		
+		if(student!=null) {
+			student.setResetPasswordToken(token);
+			studentDAO.save(student);
+		}else {
+			throw new StudentNotFoundException("Could not find any student or teacher with email "+email);
+		}
+		
+	}
+	
+	public Student get(String resetPasswordToken) {
+		return studentDAO.findByResetPasswordToken(resetPasswordToken);
+	}
+	
+	public void updatePassword(Student student,String newPassword) {
+		student.setPassword(bCryptPasswordEncoder.encode(newPassword));
+		student.setResetPasswordToken(null);
+		
+		studentDAO.save(student);
+	}
+ 
 }

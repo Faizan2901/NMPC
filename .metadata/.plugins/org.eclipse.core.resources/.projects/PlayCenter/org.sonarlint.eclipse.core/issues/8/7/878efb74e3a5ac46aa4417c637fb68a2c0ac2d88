@@ -1,6 +1,6 @@
 
-\
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒHÖRMINORZ
+c
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8Šûß ±1H×RMINORZ
 CODE_SMELL
-Š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¶î±ùüÿÿÿÿHØRMINORZ
+Š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¶î±ùüÿÿÿÿHÙRMINORZ
 CODE_SMELL

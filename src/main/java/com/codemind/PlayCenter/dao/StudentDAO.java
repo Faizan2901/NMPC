@@ -12,4 +12,8 @@ public interface StudentDAO extends JpaRepository<Student, Integer> {
     
     List<Student> findByEnabled(int isStudent);
     
+    Student findByResetPasswordToken(String token);
+    
+    Student findByEmail(String email);
+    
 }

@@ -10,30 +10,40 @@ import java.util.List;
 @Entity
 @Data
 public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 
-    @Column(name = "username")
-    private String userName;
-    
-    @Column(name = "password")
-    private String password;
-    
-    @Column(name = "enabled")
-    private int enabled;
-    
-    @Column(name = "first_name")
-    private String firstName;
-    
-    @Column(name = "last_name")
-    private String lastName;
-    
-    @Column(name = "email")
-    private String email;
-    
-    public int getId() {
+	@Column(name = "username")
+	private String userName;
+
+	@Column(name = "password")
+	private String password;
+
+	@Column(name = "enabled")
+	private int enabled;
+
+	@Column(name = "first_name")
+	private String firstName;
+
+	@Column(name = "last_name")
+	private String lastName;
+
+	@Column(name = "email")
+	private String email;
+
+	@Column(name = "admission_date")
+	private LocalDate admissionDate;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "students_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private List<Role> roles;
+
+	@Column(name = "reset_password_token")
+	private String resetPasswordToken;
+
+	public int getId() {
 		return id;
 	}
 
@@ -57,7 +67,7 @@ public class Student {
 		this.password = password;
 	}
 
-	public int isEnabled() {
+	public int getEnabled() {
 		return enabled;
 	}
 
@@ -105,20 +115,18 @@ public class Student {
 		this.roles = roles;
 	}
 
-	@Column(name = "admission_date")
-    private LocalDate admissionDate;
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "students_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
+	}
 
-    /*OneToMany: LAZY
-    ManyToOne: EAGER
-    ManyToMany: LAZY
-    OneToOne: EAGER*/
-
+	
+	
+	/*
+	 * OneToMany: LAZY ManyToOne: EAGER ManyToMany: LAZY OneToOne: EAGER
+	 */
 
 }
-
