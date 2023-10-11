@@ -1,0 +1,21 @@
+
+‚
+java:S1192P"NDefine a constant instead of duplicating this literal "selectedMonth" 3 times.(ø¼û¦úÿÿÿÿHþRCRITICALZ
+CODE_SMELL
+…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(çöìéH‚RMINORZ
+CODE_SMELL
+K
+java:S37518"Make this method non "private".(ÊÆ¤’HƒRMAJORZ
+CODE_SMELL
+K
+java:S3751J"Make this method non "private".(°ú³¼H„RMAJORZ
+CODE_SMELL
+f
+java:S1854X":Remove this useless assignment to local variable "months".(Ø½”ªH…RMAJORZ
+CODE_SMELL
+K
+java:S3751V"Make this method non "private".(ÌÜâûH†RMAJORZ
+CODE_SMELL
+x
+java:S1128"MRemove this unused import 'com.codemind.PlayCenter.entity.StudentAttendance'.(ðø†PH‡RMINORZ
+CODE_SMELL

@@ -1,0 +1,89 @@
+package com.codemind.PlayCenter.service;
+
+import com.codemind.PlayCenter.dao.RoleDAO;
+import com.codemind.PlayCenter.dao.StudentDAO;
+import com.codemind.PlayCenter.dao.StudentNotFoundException;
+import com.codemind.PlayCenter.entity.Role;
+import com.codemind.PlayCenter.entity.Student;
+import com.codemind.PlayCenter.user.WebUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	StudentDAO studentDAO;
+
+	@Autowired
+	RoleDAO roleDAO;
+
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+		Student student = studentDAO.findByUserName(username);
+		if (student == null) {
+			throw new UsernameNotFoundException("Invalid username or password.");
+		}
+		Collection<SimpleGrantedAuthority> authorities = mapRolesToAuthorities(student.getRoles());
+
+		return new org.springframework.security.core.userdetails.User(student.getUserName(), student.getPassword(),
+				authorities);
+	}
+
+	public void save(WebUser webUser) {
+
+		Student student = new Student();
+		student.setUserName(webUser.getUserName());
+		student.setPassword(bCryptPasswordEncoder.encode(webUser.getPassword()));
+		student.setFirstName(webUser.getFirstName());
+		student.setLastName(webUser.getLastName());
+		student.setEmail(webUser.getEmail());
+
+		student.setRoles(Arrays.asList(roleDAO.findByName("ROLE_STUDENT")));
+
+		studentDAO.save(student);
+
+	}
+
+	private Collection<SimpleGrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+		for (Role tempRole : roles) {
+			SimpleGrantedAuthority tempAuthority = new SimpleGrantedAuthority(tempRole.getName());
+			authorities.add(tempAuthority);
+		}
+		return authorities;
+
+	}
+
+	@Override
+	public Student findByUserName(String userName) {
+		return studentDAO.findByUserName(userName);
+	}
+
+	public void updateResetPassword(String token, String email) {
+		
+		Student student=studentDAO.findByEmail(email);
+		
+		if(student!=null) {
+			student.setResetPasswordToken(token);
+			studentDAO.save(student);
+		}else {
+			throw new StudentNotFoundException("Could not find any student or teacher with email "+email);
+		}
+		
+	}
+
+}

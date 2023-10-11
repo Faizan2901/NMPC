@@ -1,0 +1,171 @@
+package com.codemind.PlayCenter.controller;
+
+import com.codemind.PlayCenter.dao.StudentAttendanceDAO;
+import com.codemind.PlayCenter.dao.StudentDAO;
+import com.codemind.PlayCenter.entity.Role;
+import com.codemind.PlayCenter.entity.Student;
+import com.codemind.PlayCenter.entity.StudentAttendance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Controller
+@RequestMapping("/dashboard")
+public class DashBoardController {
+
+	@Autowired
+	AuthController authController;
+
+	@Autowired
+	StudentDAO studentDAO;
+
+	@Autowired
+	StudentAttendanceDAO studentAttendanceDAO;
+
+	@GetMapping("/dash-board")
+	private String getDashboardPage(Model model) {
+
+		String authenticateUserName = authController.getAuthenticateUserName();
+		Student student = studentDAO.findByUserName(authenticateUserName);
+
+		List<StudentAttendance> studentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
+
+		if (!studentAttendance.isEmpty()) {
+			model.addAttribute("isHave", true);
+		}
+
+		model.addAttribute("image", student.getId() + "_" + student.getUserName() + ".jpg");
+		model.addAttribute("userdetails", student.getFirstName() + " " + student.getLastName());
+
+		return "/homeDirectory/login/dash-board";
+	}
+
+	@GetMapping("/fill-attendance")
+	private String getAllStudentForAttendance(Model model) {
+
+		LocalDate date = LocalDate.now();
+
+		// All User who have Student Role
+		List<Student> studentList = studentDAO.findByEnabled(1);
+
+		List<Student> attendedStudents = new ArrayList<>();
+		List<Student> studentsNotDoneAttendance = new ArrayList<>();
+
+		for (Student student : studentList) {
+			StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(student.getId(), date);
+			if (studentAttendance != null) {
+				attendedStudents.add(student);
+			} else {
+				studentsNotDoneAttendance.add(student);
+			}
+		}
+
+		model.addAttribute("isDoneStudent", !attendedStudents.isEmpty());
+		model.addAttribute("attendanceDoneStudent", attendedStudents);
+		model.addAttribute("isNotDoneAttendance", !studentsNotDoneAttendance.isEmpty());
+		model.addAttribute("allStudents", studentsNotDoneAttendance);
+		model.addAttribute("todayDate", date);
+		return "/homeDirectory/attendance-page";
+	}
+
+	@PostMapping("/fill-info")
+	private String showAttendedStudent(
+			@RequestParam(name = "selectedItems", required = false) List<String> selectedItems, Model model) {
+
+		if (selectedItems == null || selectedItems.isEmpty()) {
+			return "redirect:/dashboard/fill-attendance";
+		}
+
+		LocalDate currentDate = LocalDate.now();
+		List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(currentDate);
+
+		if (!tempStudentAttendance.isEmpty()) {
+			return "redirect:/dashboard/attended-student";
+		}
+
+		for (String selectString : selectedItems) {
+			Student student = studentDAO.findByUserName(selectString);
+			if (student != null) {
+				StudentAttendance studentAttendance = new StudentAttendance();
+				studentAttendance.setStudentId(student.getId());
+				studentAttendance.setDate(Date.valueOf(currentDate));
+				studentAttendanceDAO.save(studentAttendance);
+			}
+		}
+
+		return "redirect:/dashboard/attended-student";
+	}
+
+	@GetMapping("/attended-student")
+	private String showAttendedStudentList(Model model) {
+
+		List<StudentAttendance> studentAttendance = studentAttendanceDAO.findByDate(LocalDate.now());
+
+		List<Student> allStudents = new ArrayList<>();
+
+		for (StudentAttendance attendance : studentAttendance) {
+			Optional<Student> tempStudent = studentDAO.findById(attendance.getStudentId());
+			Student student = tempStudent.get();
+			allStudents.add(student);
+		}
+
+		model.addAttribute("allStudents", allStudents);
+		model.addAttribute("todayDate", LocalDate.now());
+
+		return "/homeDirectory/attended-student-list";
+	}
+
+	@GetMapping("/deleteUser")
+	String deleteStudentFromAttendanceList(@RequestParam("studentId") String id) {
+
+		LocalDate date = LocalDate.now();
+
+		Optional<Student> tempStudent = studentDAO.findById(Integer.parseInt(id));
+		Student student = tempStudent.get();
+
+		StudentAttendance studentAttendance = studentAttendanceDAO.findByStudentIdAndDate(student.getId(), date);
+
+		studentAttendanceDAO.delete(studentAttendance);
+
+		if (studentAttendanceDAO.findByDate(date).isEmpty()) {
+			return "redirect:/dashboard/fill-attendance";
+		}
+
+		return "redirect:/dashboard/attended-student";
+
+	}
+
+	@GetMapping("/show-user")
+	private String showUser(Model model) {
+
+		List<Student> allUser = studentDAO.findAll();
+
+		List<Student> allStudent = new ArrayList<>();
+
+		List<Student> allTeacher = new ArrayList<>();
+
+		for (Student student : allUser) {
+			List<Role> roles = student.getRoles();
+			for (Role role : roles) {
+				if (role.getId() == 1) {
+					allStudent.add(student);
+				} else if (role.getId() == 2) {
+					allTeacher.add(student);
+				}
+			}
+
+		}
+
+		model.addAttribute("allStudent", allStudent);
+		model.addAttribute("allTeacher", allTeacher);
+		return "/homeDirectory/show-user";
+	}
+
+}

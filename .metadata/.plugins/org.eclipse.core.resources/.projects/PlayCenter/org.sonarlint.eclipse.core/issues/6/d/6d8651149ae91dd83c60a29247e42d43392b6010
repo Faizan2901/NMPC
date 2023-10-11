@@ -1,0 +1,6 @@
+
+…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(חצליHֻRMINORZ
+CODE_SMELL
+‡
+java:S1128"VRemove this unused import 'org.springframework.security.core.context.SecurityContext'.(״‎Þ‏ÿÿÿÿHּRMINORZ
+CODE_SMELL

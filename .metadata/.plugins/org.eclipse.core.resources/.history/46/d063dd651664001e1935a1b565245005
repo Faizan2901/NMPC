@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Attendance Section</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+<body>
+	<section class="ftco-section">
+		<div class="row justify-content-center">
+			<div class="col-md-6 text-center mb-5">
+				<h2 class="heading-section">
+					Welcome to Nahne Munhe Play Center - Attended Student
+					<List></List>
+				</h2>
+				<h4 th:text="'Date : '+${todayDate}"></h4>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<div class="row justify-content-center">
+							<div class="col-md-6 text-center mb-5">
+								<h2 class="heading-section">Attended - Student List</h2>
+							</div>
+						</div>
+						<table class="table table-responsive-xl">
+							<thead>
+								<tr>
+									<th>Email</th>
+									<th>Name</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:each="student : ${allStudents}">
+									<tr class="alert" role="alert">
+										<td class="d-flex align-items-center">
+											<div class="img"
+												style="background-image: url(/images/person_1.jpg);"></div>
+											<div class="pl-3 email">
+												<span th:text="${student.email}"></span> <span>Added:
+													01/03/2020</span>
+											</div>
+										</td>
+										<td><span th:text="${student.firstName}"></span>&nbsp;<span
+											th:text="${student.lastName}"></span></td>
+										<td class="status"><span class="active">Active</span></td>
+										<td><a
+											th:href="@{/dashboard/deleteUser(studentId=${student.id})}"
+											class="btn btn-danger btn-sm"
+											onclick="if (!(confirm('Are you sure you want to remove attendance of this student?'))) return false">
+												Remove </a></td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+						<div>
+							<a class="btn btn-primary btn-small" th:href="@{/nmpc-home}"
+								role="button">Go to Home</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/popper.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
+

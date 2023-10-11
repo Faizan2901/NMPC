@@ -1,0 +1,83 @@
+package com.codemind.PlayCenter.controller;
+
+import java.io.UnsupportedEncodingException;
+import java.net.http.HttpRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.codemind.PlayCenter.dao.StudentDAO;
+import com.codemind.PlayCenter.dao.StudentNotFoundException;
+import com.codemind.PlayCenter.service.UserService;
+import com.codemind.PlayCenter.service.UserServiceImpl;
+import com.codemind.PlayCenter.utility.Utility;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
+import net.bytebuddy.utility.RandomString;
+
+@Controller
+@RequestMapping("/forgot")
+public class ForgotPasswordController {
+
+	@Autowired
+	StudentDAO studentDAO;
+
+	@Autowired
+	UserServiceImpl serviceImpl;
+
+	@Autowired
+	JavaMailSender javaMailSender;
+
+	@GetMapping("/forgotpassword")
+	public String showForgotPasswordForm(Model model) {
+		return "/homeDirectory/forgotPassword/forgot-password-form";
+	}
+
+	@PostMapping("/forgotPassword")
+	public String processForgotPasswordForm(HttpServletRequest httpRequest, Model model) {
+
+		String email = httpRequest.getParameter("email");
+		String token = RandomString.make(45);
+		System.out.println("Email: " + email + " and Random token: " + token);
+		try {
+			serviceImpl.updateResetPasswordToken(token, email);
+			String resetPasswordLink = Utility.getSiteURL(httpRequest) + "/reset_password?token=" + token;
+
+			sendEmail(email, resetPasswordLink);
+
+			System.out.println(resetPasswordLink);
+		} catch (StudentNotFoundException e) {
+
+			model.addAttribute("error", e.getMessage());
+		}
+		return "/homeDirectory/forgotPassword/forgot-password-form";
+	}
+
+	private void sendEmail(String email, String resetPasswordLink)
+			throws UnsupportedEncodingException, MessagingException {
+
+		MimeMessage meassage = javaMailSender.createMimeMessage();
+
+		MimeMessageHelper helper = new MimeMessageHelper(meassage);
+
+		helper.setFrom("mo.faizansopariwala2901@gmail.com", "NMPC Support");
+
+		String subject = "Here's the link to reset your password";
+
+		String content = "<p>Hello,<p>" + "<p>You have requested to reset your password.</p>"
+				+ "<p>Click the link below to change youe password:</p>" + "<p><a href=\"" + resetPasswordLink
+				+ "\">Change my password</a></p>"
+				+ "<p>Ignore this email if you do remember your password, or you have not made the request.</p>";
+
+	}
+
+}

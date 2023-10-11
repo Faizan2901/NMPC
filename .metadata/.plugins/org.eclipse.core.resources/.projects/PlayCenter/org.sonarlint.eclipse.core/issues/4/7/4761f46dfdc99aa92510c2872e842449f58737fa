@@ -1,0 +1,15 @@
+
+P
+java:S3751""Make this method non "private".(‚¦–şÿÿÿÿHÖRMAJORZ
+CODE_SMELL
+…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(çöìéHÔRMINORZ
+CODE_SMELL
+J
+java:S3751)"Make this method non "private".(ÆÄYHÕRMAJORZ
+CODE_SMELL
+h
+java:S2629+"7Use the built-in formatting to construct this argument.(ôŠ¸øÿÿÿÿÿH×RMAJORZ
+CODE_SMELL
+c
+java:S26297"7Use the built-in formatting to construct this argument.(ø–ÙHØRMAJORZ
+CODE_SMELL

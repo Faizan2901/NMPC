@@ -1,0 +1,5 @@
+package com.codemind.PlayCenter.dao;
+
+public class StudentNotFoundException extends Exception {
+
+}

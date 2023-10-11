@@ -1,0 +1,26 @@
+## Turn off the Spring Boot banner
+#spring.main.banner-mode=ON
+#
+## Reduce logging level. Set logging level warn
+logging.level.root=warn
+
+
+#spring.datasource.url=jdbc:mysql://foodhubdb.c6p0nmtypb38.us-east-1.rds.amazonaws.com:3306/nmpc
+#spring.datasource.username=root
+#spring.datasource.password=faizansopariwala
+
+spring.datasource.url=jdbc:mysql://localhost:3306/nmpc
+spring.datasource.username=springstudent
+spring.datasource.password=springstudent
+
+#spring.jpa.hibernate.ddl-auto=update
+
+# Add logging configs to display SQL Statements
+logging.level.org.hibernate.SQL=debug
+logging.level.org.hibernate.orm.jdbc.bind=trace
+
+server.port=8082
+
+spring.thymeleaf.enabled=true
+spring.thymeleaf.prefix=classpath:/templates
+spring.thymeleaf.suffix=.html
