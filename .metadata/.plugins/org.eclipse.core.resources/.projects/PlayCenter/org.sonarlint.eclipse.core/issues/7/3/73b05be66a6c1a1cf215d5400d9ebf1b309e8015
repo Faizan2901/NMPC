@@ -1,25 +1,25 @@
 
-X
-java:S3751"Make this method non "private".(êÆ…”şÿÿÿÿ8™²Æ‡®1H¥RMAJORZ
-CODE_SMELL
 ™
-java:S1192`"eDefine a constant instead of duplicating this literal "redirect:/dashboard/attended-student" 3 times.(–äÁøÿÿÿÿH¦RCRITICALZ
+java:S1192`"eDefine a constant instead of duplicating this literal "redirect:/dashboard/attended-student" 3 times.(–äÁøÿÿÿÿHüRCRITICALZ
 CODE_SMELL
-…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(çöìéHªRMINORZ
-CODE_SMELL
-R
-java:S3751O"Make this method non "private".(»—§™8ĞÄ¢°1H«RMAJORZ
-CODE_SMELL
-|
-java:S3655"VCall "tempStudent.isPresent()" or "!tempStudent.isEmpty()" before accessing the value.(‡…¶H¬RMAJORZBUG
-P
-java:S3751!"Make this method non "private".(çÛÒûÿÿÿÿH­RMAJORZ
+X
+java:S3751"Make this method non "private".(êÆ…”şÿÿÿÿ8™²Æ‡®1HöRMAJORZ
 CODE_SMELL
 P
-java:S37513"Make this method non "private".(„¿øéøÿÿÿÿH®RMAJORZ
+java:S37513"Make this method non "private".(„¿øéøÿÿÿÿHùRMAJORZ
 CODE_SMELL
 K
-java:S3751i"Make this method non "private".(¸šºüH¯RMAJORZ
+java:S3751i"Make this method non "private".(¸šºüHôRMAJORZ
+CODE_SMELL
+P
+java:S3751!"Make this method non "private".(çÛÒûÿÿÿÿHøRMAJORZ
 CODE_SMELL
 {
-java:S3655q"VCall "tempStudent.isPresent()" or "!tempStudent.isEmpty()" before accessing the value.(‡…¶H°RMAJORZBUG
+java:S3655q"VCall "tempStudent.isPresent()" or "!tempStudent.isEmpty()" before accessing the value.(‡…¶HúRMAJORZBUG
+…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(çöìéHõRMINORZ
+CODE_SMELL
+|
+java:S3655"VCall "tempStudent.isPresent()" or "!tempStudent.isEmpty()" before accessing the value.(‡…¶HûRMAJORZBUG
+R
+java:S3751O"Make this method non "private".(»—§™8ĞÄ¢°1H÷RMAJORZ
+CODE_SMELL

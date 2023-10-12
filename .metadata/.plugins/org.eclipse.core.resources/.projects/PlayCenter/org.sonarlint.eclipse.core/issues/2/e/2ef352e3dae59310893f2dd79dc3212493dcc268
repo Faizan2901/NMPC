@@ -1,6 +1,6 @@
 
 K
-java:S3751"Make this method non "private".(º¸ÆÑHñRMAJORZ
+java:S3751"Make this method non "private".(º¸ÆÑHåRMAJORZ
 CODE_SMELL
-…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(çöìéHðRMINORZ
+…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(çöìéHäRMINORZ
 CODE_SMELL
