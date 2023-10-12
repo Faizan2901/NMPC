@@ -2,6 +2,8 @@ package com.codemind.PlayCenter.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.http.HttpRequest;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -90,39 +92,53 @@ public class ForgotPasswordController {
 
 		javaMailSender.send(message);
 	}
-	
+
 	@GetMapping("/reset")
-	public String showResetPasswordForm(@RequestParam("token") String token,Model model) {
-		
-		Student student=serviceImpl.get(token);
-		
-		if(student ==  null) {
-			model.addAttribute("error","Invalid Token");
-			
+	public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
+
+		Student student = serviceImpl.get(token);
+
+		Timestamp dbTimestamp = student.getGenTokenTime();
+
+		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+
+		Calendar calendar = Calendar.getInstance();
+
+		int timeDifferenceInMinutes = 1;
+
+		long timeDifferenceMillis = currentTimestamp.getTime() - dbTimestamp.getTime();
+
+		long timeDifferenceMinutes = timeDifferenceMillis / (60 * 1000);
+
+		if (student == null || timeDifferenceMinutes < timeDifferenceInMinutes) {
+
+			model.addAttribute("error", "Invalid Token or Link is expired");
+
 			return "/homeDirectory/forgotPassword/forgot-password-form";
 		}
-		
-		model.addAttribute("token",token);
-		
+
+		model.addAttribute("token", token);
+
 		return "/homeDirectory/forgotPassword/reset-password-form";
 	}
-	
+
 	@PostMapping("/reset-password")
-	public String resetPassword(HttpServletRequest request,Model model) {
-		
-		String token=request.getParameter("token");
-		String password=request.getParameter("password");
-		
-		Student student=serviceImpl.get(token);
-		
-		if(student == null) {
-			model.addAttribute("error","Invalid Token");
+	public String resetPassword(HttpServletRequest request, Model model) {
+
+		String token = request.getParameter("token");
+		String password = request.getParameter("password");
+
+		Student student = serviceImpl.get(token);
+
+		if (student == null) {
+			model.addAttribute("error", "Invalid Token or Link is expired");
 			return "/homeDirectory/forgotPassword/forgot-password-form";
-		}else {
+		} else {
 			serviceImpl.updatePassword(student, password);
-			model.addAttribute("message","You have successfully chnaged your password. Now you can use new credentials for login.");
+			model.addAttribute("message",
+					"You have successfully chnaged your password. Now you can use new credentials for login.");
 		}
-		
+
 		return "/homeDirectory/login/login-page";
 	}
 

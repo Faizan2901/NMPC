@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,6 +84,9 @@ public class UserServiceImpl implements UserService {
 		
 		if(student!=null) {
 			student.setResetPasswordToken(token);
+			
+			Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+			student.setGenTokenTime(currentTimestamp);
 			studentDAO.save(student);
 		}else {
 			throw new StudentNotFoundException("Could not find any student or teacher with email "+email);
@@ -95,6 +99,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public void updatePassword(Student student,String newPassword) {
+		
 		student.setPassword(bCryptPasswordEncoder.encode(newPassword));
 		student.setResetPasswordToken(null);
 		

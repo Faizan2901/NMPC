@@ -3,6 +3,7 @@ package com.codemind.PlayCenter.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,17 @@ public class Student {
 
 	@Column(name = "reset_password_token")
 	private String resetPasswordToken;
+
+	@Column(name = "gen_token_time")
+	private Timestamp genTokenTime;
+
+	public Timestamp getGenTokenTime() {
+		return genTokenTime;
+	}
+
+	public void setGenTokenTime(Timestamp genTokenTime) {
+		this.genTokenTime = genTokenTime;
+	}
 
 	public int getId() {
 		return id;
@@ -123,8 +135,6 @@ public class Student {
 		this.resetPasswordToken = resetPasswordToken;
 	}
 
-	
-	
 	/*
 	 * OneToMany: LAZY ManyToOne: EAGER ManyToMany: LAZY OneToOne: EAGER
 	 */
