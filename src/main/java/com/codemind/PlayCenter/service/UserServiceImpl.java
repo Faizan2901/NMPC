@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,13 +44,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void save(WebUser webUser) {
-
+		
+		LocalDate date=LocalDate.parse("2023-06-01");
 		Student student = new Student();
 		student.setUserName(webUser.getUserName());
 		student.setPassword(bCryptPasswordEncoder.encode(webUser.getPassword()));
 		student.setFirstName(webUser.getFirstName());
 		student.setLastName(webUser.getLastName());
 		student.setEmail(webUser.getEmail());
+		student.setEnabled(1);
+		student.setAdmissionDate(date);
 
 		student.setRoles(Arrays.asList(roleDAO.findByName("ROLE_STUDENT")));
 

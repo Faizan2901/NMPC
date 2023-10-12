@@ -72,7 +72,6 @@
 		<dependency>
 	        <groupId>net.bytebuddy</groupId>
 	        <artifactId>byte-buddy</artifactId>
-	        <version>1.11.16</version> <!-- Use the latest version available -->
     	</dependency>
     	<dependency>
 			<groupId>org.springframework.boot</groupId>

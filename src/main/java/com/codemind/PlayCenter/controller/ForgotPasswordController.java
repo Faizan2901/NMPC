@@ -123,7 +123,7 @@ public class ForgotPasswordController {
 			model.addAttribute("message","You have successfully chnaged your password. Now you can use new credentials for login.");
 		}
 		
-		return "/homeDirectory/forgotPassword/reset-password-form";
+		return "/homeDirectory/login/login-page";
 	}
 
 }

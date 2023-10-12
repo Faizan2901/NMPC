@@ -1,22 +1,22 @@
 
 
-java:S1128"NRemove this unused import 'org.springframework.mail.javamail.MimeMailMessage'.(áö—¥8ÖêİÔ±1HRMINORZ
-CODE_SMELL
-z
-java:S1128"HRemove this unused import 'com.codemind.PlayCenter.service.UserService'.(äùí8ÖêİÔ±1HŸRMINORZ
-CODE_SMELL
-k	java:S106="9Replace this use of System.out or System.err by a logger.(€Å¥é8ÎÂâÍ±1H´RMAJORZ
+java:S1128"NRemove this unused import 'org.springframework.mail.javamail.MimeMailMessage'.(áö—¥8ÖêİÔ±1H	RMINORZ
 CODE_SMELL
 n
-java:S1128"6Remove this unused import 'java.net.http.HttpRequest'.(ş€ŠÍşÿÿÿÿ8ÖêİÔ±1H›RMINORZ
+java:S1128"6Remove this unused import 'java.net.http.HttpRequest'.(ş€ŠÍşÿÿÿÿ8ÖêİÔ±1Hœ	RMINORZ
 CODE_SMELL
-…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(çöìéH¼RMINORZ
+k	java:S1064"9Replace this use of System.out or System.err by a logger.(©¶¨›8œ µÊ±1Hª	RMAJORZ
 CODE_SMELL
-©
-java:S1192,"sDefine a constant instead of duplicating this literal "/homeDirectory/forgotPassword/forgot-password-form" 3 times.(‰ÏØß8õÊ«Õ±1HíRCRITICALZ
-CODE_SMELL
-k	java:S1064"9Replace this use of System.out or System.err by a logger.(©¶¨›8œ µÊ±1H»RMAJORZ
+…	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(çöìéH©	RMINORZ
 CODE_SMELL
 |
-java:S1192@"FDefine a constant instead of duplicating this literal "error" 3 times.(†«œ¢8èµøÕ±1H–	RCRITICALZ
+java:S1192@"FDefine a constant instead of duplicating this literal "error" 4 times.(†«œ¢8èµøÕ±1H 	RCRITICALZ
+CODE_SMELL
+k	java:S106="9Replace this use of System.out or System.err by a logger.(€Å¥é8ÎÂâÍ±1H¨	RMAJORZ
+CODE_SMELL
+©
+java:S1192,"sDefine a constant instead of duplicating this literal "/homeDirectory/forgotPassword/forgot-password-form" 4 times.(‰ÏØß8õÊ«Õ±1H¤	RCRITICALZ
+CODE_SMELL
+z
+java:S1128"HRemove this unused import 'com.codemind.PlayCenter.service.UserService'.(äùí8ÖêİÔ±1Hš	RMINORZ
 CODE_SMELL

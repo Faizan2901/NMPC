@@ -74,6 +74,13 @@ body {
 											Invalid username and password.</div>
 
 									</div>
+									<div th:if="${message != null}">
+
+										<div class="alert alert-success col-xs-offset-1 col-xs-10">
+											<span th:text="${message}"></span>
+										</div>
+
+									</div>
 
 									<!-- Check for logout -->
 
