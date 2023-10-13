@@ -102,17 +102,15 @@ public class ForgotPasswordController {
 
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 
-		Calendar calendar = Calendar.getInstance();
-
 		int timeDifferenceInMinutes = 1;
 
 		long timeDifferenceMillis = currentTimestamp.getTime() - dbTimestamp.getTime();
 
 		long timeDifferenceMinutes = timeDifferenceMillis / (60 * 1000);
 
-		if (student == null || timeDifferenceMinutes < timeDifferenceInMinutes) {
+		if (student == null || timeDifferenceMinutes >= timeDifferenceInMinutes) {
 
-			model.addAttribute("error", "Invalid Token or Link is expired");
+			model.addAttribute("error", "Link is expired");
 
 			return "/homeDirectory/forgotPassword/forgot-password-form";
 		}
