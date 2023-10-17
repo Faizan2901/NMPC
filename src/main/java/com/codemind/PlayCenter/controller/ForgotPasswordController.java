@@ -98,19 +98,25 @@ public class ForgotPasswordController {
 
 		Student student = serviceImpl.get(token);
 
-		Timestamp dbTimestamp = student.getGenTokenTime();
+		if (student != null) {
+			Timestamp dbTimestamp = student.getGenTokenTime();
 
-		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+			Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 
-		int timeDifferenceInMinutes = 1;
+			int timeDifferenceInMinutes = 5;
 
-		long timeDifferenceMillis = currentTimestamp.getTime() - dbTimestamp.getTime();
+			long timeDifferenceMillis = currentTimestamp.getTime() - dbTimestamp.getTime();
 
-		long timeDifferenceMinutes = timeDifferenceMillis / (60 * 1000);
+			long timeDifferenceMinutes = timeDifferenceMillis / (60 * 1000);
 
-		if (student == null || timeDifferenceMinutes >= timeDifferenceInMinutes) {
+			if (timeDifferenceMinutes >= timeDifferenceInMinutes) {
 
-			model.addAttribute("error", "Link is expired");
+				model.addAttribute("error", "Time for link is expired.");
+
+				return "/homeDirectory/forgotPassword/forgot-password-form";
+			}
+		}else {
+			model.addAttribute("error", "Link is Expired");
 
 			return "/homeDirectory/forgotPassword/forgot-password-form";
 		}
