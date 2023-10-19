@@ -3,6 +3,9 @@ package com.codemind.PlayCenter.controller;
 import com.codemind.PlayCenter.entity.Student;
 import com.codemind.PlayCenter.service.UserService;
 import com.codemind.PlayCenter.user.WebUser;
+
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -12,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
 
 @Controller
@@ -38,7 +42,7 @@ public class RegisterController {
     }
 
     @PostMapping("/processData")
-    private String processRegisterData(@ModelAttribute("webUser") WebUser webUser, BindingResult bindingResult, Model model, HttpSession httpSession) {
+    private String processRegisterData(@ModelAttribute("webUser") WebUser webUser, BindingResult bindingResult, Model model, HttpSession httpSession,HttpServletRequest httpRequest) throws UnsupportedEncodingException, MessagingException {
         String userName = webUser.getUserName();
         logger.info("Processing registration for : " + userName);
 
@@ -51,7 +55,7 @@ public class RegisterController {
             return "/homeDirectory/register/register-page";
         }
 
-        userService.save(webUser);
+        userService.save(webUser,httpRequest);
         logger.info("Successfully created user : " + userName);
 
         httpSession.setAttribute("user", webUser);
