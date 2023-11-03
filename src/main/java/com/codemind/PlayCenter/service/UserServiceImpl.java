@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private void sendEmail(String email,String firstName,HttpServletRequest httpRequest) throws UnsupportedEncodingException, MessagingException {
-		// TODO Auto-generated method stub
+		
 		MimeMessage message = javaMailSender.createMimeMessage();
 
 		MimeMessageHelper helper = new MimeMessageHelper(message);

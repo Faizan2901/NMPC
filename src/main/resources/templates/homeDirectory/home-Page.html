@@ -1,249 +1,262 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playcenter - Welcome</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        /* Gradient Background */
-        body {
-            background: linear-gradient(45deg, #4CAF50, #2196F3);
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: white;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playcenter - Welcome</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<style>
+/* Gradient Background */
+body {
+	background: linear-gradient(45deg, #4CAF50, #2196F3);
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	color: white;
+}
 
-        /* Navbar */
-        .navbar {
-            background-color: transparent;
-        }
+/* Navbar */
+.navbar {
+	background-color: transparent;
+}
 
-        .navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-        }
+.navbar-brand {
+	font-size: 24px;
+	font-weight: bold;
+}
 
-        /* Hero Section */
-        .hero {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 120px 0;
-        }
+/* Hero Section */
+.hero {
+	background-color: rgba(0, 0, 0, 0.6);
+	padding: 120px 0;
+}
 
-        .hero h1 {
-            font-size: 36px;
-        }
+.hero h1 {
+	font-size: 36px;
+}
 
-        .hero p {
-            font-size: 20px;
-        }
+.hero p {
+	font-size: 20px;
+}
 
-        /* Featured Games Section */
-        .card {
-            background-color: rgba(0, 0, 0, 0.7);
-            border: none;
-            color: white;
-        }
+/* Featured Games Section */
+.card {
+	background-color: rgba(0, 0, 0, 0.7);
+	border: none;
+	color: white;
+}
 
-        .card-title {
-            font-size: 24px;
-        }
+.card-title {
+	font-size: 24px;
+}
 
-        /* Card Images */
-        .card-img-top {
-            height: 200px; /* Fixed height for all card images */
-            object-fit: cover; /* This ensures the image covers the entire space */
-            transition: transform 0.3s; /* Add a transition for smooth scaling */
-        }
+/* Card Images */
+.card-img-top {
+	height: 200px; /* Fixed height for all card images */
+	object-fit: cover; /* This ensures the image covers the entire space */
+	transition: transform 0.3s; /* Add a transition for smooth scaling */
+}
 
-        /* Expand image on hover */
-        .card:hover .card-img-top {
-            transform: scale(1.2); /* Increase image size by 20% on hover */
-        }
+/* Expand image on hover */
+.card:hover .card-img-top {
+	transform: scale(1.2); /* Increase image size by 20% on hover */
+}
 
-        /* About Section */
-        section {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            margin: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            color: #333;
-        }
+/* About Section */
+section {
+	background-color: rgba(255, 255, 255, 0.9);
+	padding: 20px;
+	margin: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	color: #333;
+}
 
-        /* Services Section */
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+/* Services Section */
+ul {
+	list-style-type: none;
+	padding: 0;
+}
 
-        ul li {
-            margin-bottom: 10px;
-        }
+ul li {
+	margin-bottom: 10px;
+}
 
-        /* Contact Section */
-        address {
-            font-style: normal;
-        }
+/* Contact Section */
+address {
+	font-style: normal;
+}
 
-        /* Footer */
-        footer {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 10px 0;
-        }
+/* Footer */
+footer {
+	background-color: rgba(0, 0, 0, 0.7);
+	padding: 10px 0;
+}
 
-        footer p {
-            font-size: 14px;
-        }
-    </style>
+footer p {
+	font-size: 14px;
+}
+</style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">Nanhe Munne Play Center</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#service">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/loginPage}">Login</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container">
+			<a class="navbar-brand" href="#">Nanhe Munne Play Center</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#about">About</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#service">Services</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#contact">Contact</a>
+					</li>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/loginPage}">Login</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-<!-- Hero Section -->
-<header class="hero bg-primary text-white text-center py-5">
-    <div class="container">
-        <h1 class="display-4">Welcome to Nanhe Munne Play Center</h1>
-        <p class="lead">Experience fun and excitement for all ages</p>
-        <a th:href="@{/explore/explorePage}" class="btn btn-light btn-lg">Explore Now</a>
-    </div>
-</header>
+	<!-- Hero Section -->
+	<header class="hero bg-primary text-white text-center py-5">
+		<div class="container">
+			<h1 class="display-4">Welcome to Nanhe Munne Play Center</h1>
+			<p class="lead">Experience fun and excitement for all ages</p>
+			<a th:href="@{/explore/explorePage}" class="btn btn-light btn-lg">Explore
+				Now</a>
+		</div>
+	</header>
 
-<!-- Featured Games Section -->
-<section class="py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">Featured</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-img-top-container">
-                        <img th:src="@{/images/etiquettes.jpeg}" class="card-img-top" alt="Game 1">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Teach Etiquette of Life</h5>
-                        <p class="card-text">Embark on an epic adventure and uncover hidden treasures.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-img-top-container">
-                        <img th:src="@{/images/islamic-culture.jpg}" class="card-img-top" alt="Game 2">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Islamic Culture</h5>
-                        <p class="card-text">Feel the adrenaline rush as you race against the best.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-img-top-container">
-                        <img th:src="@{/images/playing-area.jpg}" class="card-img-top" alt="Game 3">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Playing Area</h5>
-                        <p class="card-text">Challenge your mind with mind-boggling puzzles.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-img-top-container">
-                        <img th:src="@{/images/interactive.jpg}" class="card-img-top" alt="Game 4">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Interactive Activity</h5>
-                        <p class="card-text">Challenge your mind with mind-boggling puzzles.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+	<!-- Featured Games Section -->
+	<section class="py-5">
+		<div class="container">
+			<h2 class="text-center mb-4">Featured</h2>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card mb-4">
+						<div class="card-img-top-container">
+							<img th:src="@{/images/etiquettes.jpeg}" class="card-img-top"
+								alt="Game 1">
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">Teach Etiquette of Life</h5>
+							<p class="card-text">Embark on an epic adventure and uncover
+								hidden treasures.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card mb-4">
+						<div class="card-img-top-container">
+							<img th:src="@{/images/islamic-culture.jpg}" class="card-img-top"
+								alt="Game 2">
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">Islamic Culture</h5>
+							<p class="card-text">Feel the adrenaline rush as you race
+								against the best.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card mb-4">
+						<div class="card-img-top-container">
+							<img th:src="@{/images/playing-area.jpg}" class="card-img-top"
+								alt="Game 3">
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">Playing Area</h5>
+							<p class="card-text">Challenge your mind with mind-boggling
+								puzzles.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card mb-4">
+						<div class="card-img-top-container">
+							<img th:src="@{/images/interactive.jpg}" class="card-img-top"
+								alt="Game 4">
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">Interactive Activity</h5>
+							<p class="card-text">Challenge your mind with mind-boggling
+								puzzles.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="py-5">
+		<h2 class="text-center mb-4">History</h2>
+		<div id="bargraph"></div>
+	</section>
+	<section>
+		<h2 id="about">About us</h2>
+		<p>We provide a nurturing and educational environment for your
+			child's early years. Our experienced staff is dedicated to fostering
+			creativity, curiosity, and growth in a safe and loving setting.</p>
+		<h4>What is Nanhe Munne Play Center?</h4>
+		<p>A "Nanhe Munne Play Center" often abbreviated as "kinder" or
+			"KG," is an educational institution or a grade level that focuses on
+			the early childhood education and development of young children,
+			typically ranging from ages 3 to 6 years old, although the specific
+			age range can vary from one country or educational system to another.
+			Kindergarten plays a crucial role in a child's early years by
+			providing a structured environment that fosters social, emotional,
+			intellectual, and physical development.</p>
+		<p>We have this teaching place since 2001</p>
+	</section>
 
-<section>
-    <h2 id="about">About Our Nanhe Munne Play Center</h2>
-    <p>We provide a nurturing and educational environment for your child's early years. Our experienced staff is
-        dedicated to fostering creativity, curiosity, and growth in a safe and loving setting.</p>
-    <h4>What is Nanhe Munne Play Center?</h4>
-    <p>A "Nanhe Munne Play Center" often abbreviated as "kinder" or "KG," is an educational institution or a grade level
-        that focuses on the early childhood education and development of young children, typically ranging from ages 3
-        to 6 years old, although the specific age range can vary from one country or educational system to another.
-        Kindergarten plays a crucial role in a child's early years by providing a structured environment that fosters
-        social, emotional, intellectual, and physical development.</p>
-    <p>We have this teaching place since 2001</p>
-</section>
+	<section>
+		<h2 id="service">Our Services</h2>
+		<ul>
+			<li><strong>Safe Environment:</strong> Your child's safety is
+				our top priority, with secure facilities and supervision.</li>
+			<li><strong>Early Learning Programs:</strong> We offer
+				age-appropriate learning activities and play-based curriculum.</li>
+			<li><strong>Qualified Staff:</strong> Our teachers are certified
+				and experienced in early childhood education.</li>
+			<li><strong>Parent Involvement:</strong> We encourage parental
+				involvement and open communication.</li>
+			<li><strong>Prize Ceremony:</strong> We encourage children to
+				give prize for open communication.</li>
+			<li><strong>Annual Farewall:</strong> We celebrate annual
+				function every end of teachinh year and give grade to children for
+				further addmission.</li>
+		</ul>
+	</section>
 
-<section>
-    <h2 id="service">Our Services</h2>
-    <ul>
-        <li><strong>Early Learning Programs:</strong> We offer age-appropriate learning activities and play-based
-            curriculum.
-        </li>
-        <li><strong>Qualified Staff:</strong> Our teachers are certified and experienced in early childhood education.
-        </li>
-        <li><strong>Safe Environment:</strong> Your child's safety is our top priority, with secure facilities and
-            supervision.
-        </li>
-        <li><strong>Healthy Meals:</strong> Nutritious meals and snacks are provided to support your child's
-            development.
-        </li>
-        <li><strong>Parent Involvement:</strong> We encourage parental involvement and open communication.</li>
-        <li><strong>Prize Ceremony:</strong> We encourage children to give prize for open communication.</li>
-        <li><strong>Annual Farewall:</strong> We celebrate annual function every end of teachinh year and give grade to
-            children for further addmission.
-        </li>
-    </ul>
-</section>
+	<section>
+		<h2 id="contact">Contact Us</h2>
+		<p>If you have any questions or would like to enroll your child,
+			please feel free to contact us:</p>
+		<address>
+			Email: <a href="mailto:mo.faizansoariwala2901@gmail.com">info@nmpcservices.com</a><br>
+			Phone: <a href="tel:+91 9727679753">+91 9727679753</a><br>
+			Address: Bakrichowk Mogalwada, Vadodara, 390017 , Gujarat , India
+		</address>
+	</section>
 
-<section>
-    <h2 id="contact">Contact Us</h2>
-    <p>If you have any questions or would like to enroll your child, please feel free to contact us:</p>
-    <address>
-        Email: <a href="mailto:mo.faizansoariwala2901@gmail.com">info@nmpcservices.com</a><br>
-        Phone: <a href="tel:+91 9727679753">+91 9727679753</a><br>
-        Address: Bakrichowk Mogalwada, Vadodara, 390017 , Gujarat , India
-    </address>
-</section>
+	<!-- Footer -->
+	<footer class="bg-dark text-white py-3 text-center">
+		<p>&copy; 2023 NMPC. All rights reserved.</p>
+	</footer>
 
-<!-- Footer -->
-<footer class="bg-dark text-white py-3 text-center">
-    <p>&copy; 2023 NMPC. All rights reserved.</p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script>
     // JavaScript to display full-size card image on hover
     const cardImgContainers = document.querySelectorAll('.card-img-top-container');
     cardImgContainers.forEach(container => {
@@ -256,6 +269,29 @@
             cardImg.style.transform = 'scale(1)';
         });
     });
+    
+    var studentNumbers = [100, 120, 140, 110, 90, 130, 150, 140, 160, 120];
+    var years = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    // Create the bar graph data
+    var trace1 = {
+        x: years,
+        y: studentNumbers,
+        name: 'Number of Students',
+        opacity: 0.7,
+        marker: { color: '#66DD66' }
+    };
+
+    // Define the layout
+    var layout = {
+        title: 'Student Distribution Over Years',
+        xaxis: { title: 'Years' },
+        yaxis: { title: 'Number of Students' }
+    };
+
+    // Create and display the graph
+    var data = [trace1];
+    Plotly.newPlot('bargraph', data, layout);
 </script>
 </body>
 </html>

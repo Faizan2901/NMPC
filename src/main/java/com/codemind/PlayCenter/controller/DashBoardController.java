@@ -5,16 +5,23 @@ import com.codemind.PlayCenter.dao.StudentDAO;
 import com.codemind.PlayCenter.entity.Role;
 import com.codemind.PlayCenter.entity.Student;
 import com.codemind.PlayCenter.entity.StudentAttendance;
+import com.github.sh0nk.matplotlib4j.Plot;
+import com.github.sh0nk.matplotlib4j.PythonExecutionException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -76,30 +83,31 @@ public class DashBoardController {
 	}
 
 	@PostMapping("/fill-info")
-    private String showAttendedStudent(@RequestParam(name = "selectedItems", required = false) List<String> selectedItems, Model model) {
+	private String showAttendedStudent(
+			@RequestParam(name = "selectedItems", required = false) List<String> selectedItems, Model model) {
 
-		LocalDate date=LocalDate.now();
-        List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(date);
+		LocalDate date = LocalDate.now();
+		List<StudentAttendance> tempStudentAttendance = studentAttendanceDAO.findByDate(date);
 
-        if (selectedItems == null && tempStudentAttendance.isEmpty()) {
-            return "redirect:/dashboard/fill-attendance";
-        }
+		if (selectedItems == null && tempStudentAttendance.isEmpty()) {
+			return "redirect:/dashboard/fill-attendance";
+		}
 
-        if (selectedItems != null) {
-            for (String selectString : selectedItems) {
-                Student student = studentDAO.findByUserName(selectString);
-                StudentAttendance studentAttendance = new StudentAttendance();
-                studentAttendance.setStudentId(student.getId());
-                studentAttendance.setDate(Date.valueOf(date));
-                studentAttendanceDAO.save(studentAttendance);
-            }
-            return "redirect:/dashboard/attended-student";
+		if (selectedItems != null) {
+			for (String selectString : selectedItems) {
+				Student student = studentDAO.findByUserName(selectString);
+				StudentAttendance studentAttendance = new StudentAttendance();
+				studentAttendance.setStudentId(student.getId());
+				studentAttendance.setDate(Date.valueOf(date));
+				studentAttendanceDAO.save(studentAttendance);
+			}
+			return "redirect:/dashboard/attended-student";
 
-        } else {
-            model.addAttribute("isNull", true);
-            return "redirect:/dashboard/attended-student";
-        }
-    }
+		} else {
+			model.addAttribute("isNull", true);
+			return "redirect:/dashboard/attended-student";
+		}
+	}
 
 	@GetMapping("/attended-student")
 	private String showAttendedStudentList(Model model) {
