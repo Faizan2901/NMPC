@@ -197,6 +197,13 @@ footer p {
 			</div>
 		</div>
 	</section>
+	<section>
+		<h2 class="text-center mb-4">New Announcement</h2>
+		<object th:data="${pdfUrl}" type="application/pdf" width="100%"
+			height="600px">
+			<embed th:src="${pdfUrl}" type="application/pdf" />
+		</object>
+	</section>
 	<section class="py-5">
 		<h2 class="text-center mb-4">History</h2>
 		<div id="bargraph"></div>
