@@ -3,7 +3,8 @@ package com.codemind.PlayCenter.controller;
 import com.codemind.PlayCenter.dao.StudentAttendanceDAO;
 import com.codemind.PlayCenter.dao.StudentDAO;
 import com.codemind.PlayCenter.entity.Student;
-import com.codemind.PlayCenter.entity.StudentAttendance;
+import com.codemind.PlayCenter.utility.Utility;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,25 +33,7 @@ public class StudentController {
 	@Autowired
 	StudentAttendanceDAO studentAttendanceDAO;
 
-	Map<String, String> monthMap = new HashMap<>();
-
-	@PostConstruct
-	private void getMonth() {
-
-		monthMap.put("JANUARY", "01");
-		monthMap.put("FEBRUARY", "02");
-		monthMap.put("MARCH", "03");
-		monthMap.put("APRIL", "04");
-		monthMap.put("MAY", "05");
-		monthMap.put("JUNE", "06");
-		monthMap.put("JULY", "07");
-		monthMap.put("AUGUST", "08");
-		monthMap.put("SEPTEMBER", "09");
-		monthMap.put("OCTOBER", "10");
-		monthMap.put("NOVEMBER", "11");
-		monthMap.put("DECEMBER", "12");
-
-	}
+	Map<String, String> monthMap = Utility.getMonth();
 
 	@GetMapping("/student-info")
 	private String getStudentInfo(Model model) {
